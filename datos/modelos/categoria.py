@@ -1,5 +1,10 @@
-class Categoria: 
-    def __init__(self,id_categoria,nombre,descripcion):
-        self.__id_categoria= id_categoria
-        self.__nombre= nombre
-        self.__descripcion= descripcion
+from peewee import CharField,AutoField
+from datos.modelos import BaseModel
+
+class Categoria(BaseModel):
+    descripcion = CharField()
+    id_categoria = AutoField()
+    nombre = CharField(max_length=50)
+    
+    class Meta:
+        table_name = 'categorias'

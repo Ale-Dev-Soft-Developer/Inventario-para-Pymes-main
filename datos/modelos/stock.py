@@ -1,5 +1,12 @@
-class Stock:
-    def __init__(self,id_stock,stock_actual,stock_minimo):
-        self.__id_stock= id_stock
-        self.__stock_actual= stock_actual
-        self.__stock_minimo= stock_minimo
+from peewee import CharField,AutoField,IntegerField,ForeignKeyField,Model
+from datos.modelos import BaseModel
+from datos.modelos.producto import Producto as Productos
+
+
+class Stock(BaseModel):
+    id_stock = AutoField()
+    stock_actual = IntegerField()
+    stock_minimo = IntegerField()
+
+    class Meta:
+        table_name = 'stock'

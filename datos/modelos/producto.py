@@ -1,12 +1,20 @@
-class Producto:
-    def __init__(self,id_producto,nombre,sku,precio_costo,precio_venta,descripcion,fecha_elaboracion,fecha_vencimiento,estado,id_categoria):
-        self.__id_producto= id_producto
-        self.__nombre= nombre
-        self.__sku= sku
-        self.__precio_costo= precio_costo
-        self.__precio_venta= precio_venta
-        self.__descripcion= descripcion
-        self.__fecha_elaboracion= fecha_elaboracion
-        self.__fecha_vencimiento= fecha_vencimiento
-        self.__estado= estado
-        self.__id_categoria= id_categoria
+from peewee import CharField,AutoField,BooleanField,SQL,ForeignKeyField,Model,IntegerField,DateField
+from auxiliares.mensajes import valor_por_defecto
+from datos.modelos import BaseModel
+from datos.modelos.categoria import Categoria as Categorias
+
+
+class Producto(BaseModel):
+    descripcion = CharField()
+    estado = BooleanField(constraints=[SQL(valor_por_defecto)])
+    fecha_elaboracion = DateField(null=True)
+    fecha_vencimiento = DateField(null=True)
+    id_categoria = ForeignKeyField(column_name='id_categoria', field='id_categoria', model=Categorias)
+    id_producto = AutoField()
+    nombre = CharField(max_length=50)
+    precio_costo = IntegerField()
+    precio_venta = IntegerField()
+    sku = CharField(max_length=100, unique=True)
+
+    class Meta:
+        table_name = 'productos'
