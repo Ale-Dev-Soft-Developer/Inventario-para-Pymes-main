@@ -1,9 +1,12 @@
-from peewee import *
+from peewee import DateField,CharField,AutoField,IntegerField,BooleanField,SQL,ForeignKeyField,Model
+from decouple import config
+from auxiliares.mensajes import valor_por_defecto
+from datos.conexion import conectar_db
 
-database = MySQLDatabase('sistema_pyme', **{'charset': 'utf8mb4', 'host': 'localhost', 'port': 3306, 'user': 'Usuario', 'password': 'Inacap.2026semestre2!'})
 
-class UnknownField(object):
-    def __init__(self, *_, **__): pass
+#Conexion con mi DB
+database = conectar_db()
+
 
 class BaseModel(Model):
     class Meta:
@@ -21,7 +24,7 @@ class Direcciones(BaseModel):
 
 class Almacenes(BaseModel):
     encargado = CharField(max_length=50)
-    estado = BooleanField(constraints=[SQL("DEFAULT 1")])
+    estado = BooleanField(constraints=[SQL(valor_por_defecto)])
     id_almacen = AutoField()
     id_direccion = ForeignKeyField(column_name='id_direccion', field='id_direccion', model=Direcciones)
     nombre = CharField(max_length=50)
@@ -39,7 +42,7 @@ class Categorias(BaseModel):
 
 class Productos(BaseModel):
     descripcion = CharField()
-    estado = BooleanField(constraints=[SQL("DEFAULT 1")])
+    estado = BooleanField(constraints=[SQL(valor_por_defecto)])
     fecha_elaboracion = DateField(null=True)
     fecha_vencimiento = DateField(null=True)
     id_categoria = ForeignKeyField(column_name='id_categoria', field='id_categoria', model=Categorias)
@@ -85,7 +88,7 @@ class Movimientos(BaseModel):
 
 class Proveedores(BaseModel):
     correo = CharField(max_length=100, null=True, unique=True)
-    estado = BooleanField(constraints=[SQL("DEFAULT 1")])
+    estado = BooleanField(constraints=[SQL(valor_por_defecto)])
     id_direccion = ForeignKeyField(column_name='id_direccion', field='id_direccion', model=Direcciones)
     id_proveedor = AutoField()
     nombre = CharField(max_length=50)
@@ -96,7 +99,7 @@ class Proveedores(BaseModel):
         table_name = 'proveedores'
 
 class ProductoProveedor(BaseModel):
-    es_principal = BooleanField(constraints=[SQL("DEFAULT 0")])
+    es_principal = BooleanField(constraints=[SQL(valor_por_defecto)])
     id_producto = ForeignKeyField(column_name='id_producto', field='id_producto', model=Productos)
     id_proveedor = ForeignKeyField(column_name='id_proveedor', field='id_proveedor', model=Proveedores)
 

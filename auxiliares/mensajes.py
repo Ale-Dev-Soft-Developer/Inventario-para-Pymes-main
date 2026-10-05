@@ -1,0 +1,1 @@
+valor_por_defecto = 'DEFAULT 1'
