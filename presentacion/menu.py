@@ -1,9 +1,12 @@
-from auxiliares.menu import menu_superior
+from auxiliares.menu import menu_superior, menu_productos, menu_bodega
+
+
 
 def menu_principal():
         print("Bienvenido a la Bodega")
     
         while(True):
+            
             for clave, valor in menu_superior.items():
                 print(f"[{clave}]- {valor}")
             
