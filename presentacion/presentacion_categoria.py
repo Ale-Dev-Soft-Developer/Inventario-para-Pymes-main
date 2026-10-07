@@ -9,3 +9,6 @@ def actualizar_datos_categoria():
     nombre = input("Ingrese el nuevo nombre de la categoría: ")
     descripcion = input("Ingrese la nueva descripción de la categoría: ")
     return nombre, descripcion
+
+def eliminar_datos_categoria():
+    pass

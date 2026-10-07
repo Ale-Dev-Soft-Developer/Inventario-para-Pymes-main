@@ -10,8 +10,8 @@ def listado_categorias():
     # va a la clase Categoria y me crea el objeto categoria con los atributos de la clase Categoria.
 def guardar_categoria(categoria:Categoria):
     try: 
-        categoria.save()
-        print(f"Se ha guardado {categoria.nombre}")
+        guardar = categoria.save() #cambie el nombre por repetecion de variable "guardar_categoria"
+        print(f"{guardar}")
     except IntegrityError as e:
         print(f"Error al guardar la categoría: {e}")
     except OperationError as e:

@@ -3,15 +3,18 @@ from datos.modelos.categoria import Categoria
 from prettytable import PrettyTable
 
 def listado_categorias():
-    categorias = listado_categorias()
+    
     tabla_categoria = PrettyTable()
     tabla_categoria.field_names = ["ID", "Nombre", "Descripción"]
-    if categorias:
-        for categoria in categorias:
+    
+    data_de_categorias = listado_categorias() #instancia para revisar la data de la tabla
+    
+    if data_de_categorias:
+        for categoria in data_de_categorias:
             tabla_categoria.add_row([categoria.id_categoria, categoria.nombre, categoria.descripcion])
     print(tabla_categoria)
     
-def guardar_categoria(nombre,descripion):
+def crear_categoria(nombre,descripion): #cambio de nombre de la funcion para no confundir con la otra funcion "guardar_categoria"
     nueva_categoria = Categoria()
     nueva_categoria.nombre = nombre
     nueva_categoria.descripcion = descripion
