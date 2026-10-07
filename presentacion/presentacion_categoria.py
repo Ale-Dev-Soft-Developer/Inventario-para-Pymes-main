@@ -1,14 +1,28 @@
-from negocio.negocio_categoria import listado_categorias, guardar_categoria, solicitar_datos_categoria
+from negocio.negocio_categoria import listado_categorias, crear_categoria, actualizar_categoria_existente
+
 
 def solicitar_datos_categoria():
-    descripcion = input("Ingrese la descripción de la categoría: ")
-    nombre = input("Ingrese el nombre de la categoría: ")
-    return nombre, descripcion
+    
+    nombre = descripcion = ""
+    
+    while nombre == "":
+        nombre = input("Ingrese el nombre de la categoria: ")
+    while descripcion == "":    
+        descripcion = input("Ingrese la descripion de la categoria: ")
+    
+    crear_categoria(nombre,descripcion)
+    
 
 def actualizar_datos_categoria():
-    nombre = input("Ingrese el nuevo nombre de la categoría: ")
-    descripcion = input("Ingrese la nueva descripción de la categoría: ")
-    return nombre, descripcion
+    nombre = descripcion = ""
+        
+    while nombre == "":
+        nombre = input("Ingrese el nombre de la categoria: ")
+    while descripcion == "":    
+        descripcion = input("Ingrese la descripion de la categoria: ")
+        
+    actualizar_categoria_existente(nombre,descripcion)
+        
 
 def eliminar_datos_categoria():
     pass
