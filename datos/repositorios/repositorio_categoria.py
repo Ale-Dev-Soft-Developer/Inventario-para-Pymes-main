@@ -7,13 +7,14 @@ def listado_categorias():
     if categorias:
         return categorias
     
-# categoria:Categoria con esto le digo que la variable categoria es de tipo Categoria. 
-# va a la clase Categoria y me crea el objeto categoria con los atributos de la clase Categoria.
+
 #POST
 def guardar_categoria(categoria:Categoria):
     try: 
-        guardar = categoria.save() #cambie el nombre por repetecion de variable "guardar_categoria"
+        guardar = categoria.save()
         print(f"{guardar}")
+        return True
+        
     except IntegrityError as e:
         print(f"Error al guardar la categoría: {e}")
     except OperationalError as e:
@@ -22,12 +23,16 @@ def guardar_categoria(categoria:Categoria):
         print(f"Error de base de datos: {e}")
     except PeeweeException as e:
         print(f"Error de Peewee: {e}")
+    
+    return False
 
 #PUT o CATCH        
 def actualizar_categoria(categoria:Categoria):
     try:
         categoria.save()
         print(f"Se ha actualizado {categoria.nombre}")
+        return True
+    
     except IntegrityError as e:
         print(f"Error al actualizar la categoría: {e}")
     except OperationalError as e:
@@ -36,5 +41,7 @@ def actualizar_categoria(categoria:Categoria):
         print(f"Error de base de datos: {e}")
     except PeeweeException as e:
         print(f"Error de Peewee: {e}")
+    
+    return False
         
 #DELETE por desarrollar

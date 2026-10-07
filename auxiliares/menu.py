@@ -31,14 +31,14 @@ submenu_bodega = {
     '0':'Salir'
 }
 submenu_proveedor = {
-    '1':'Registrar bodega',
+    '1':'Registrar proveedor',
     '2':'Editar bodega',
     '3':'Eliminar bodega',
     '4':'Volver al menú principal',
     '0':'Salir'
 }
 submenu_almacen = {
-    '1':'Registrar bodega',
+    '1':'Registrar almacen',
     '2':'Editar bodega',
     '3':'Eliminar bodega',
     '4':'Volver al menú principal',
