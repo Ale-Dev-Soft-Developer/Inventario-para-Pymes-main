@@ -1,4 +1,9 @@
-from negocio.negocio_producto import crear_producto, obtener_producto, actualizar_producto_existente
+from negocio.negocio_producto import(crear_producto,
+                                     obtener_producto,
+                                     actualizar_producto_existente,
+                                     listado_productos,
+                                     desactivar_categoria)
+
 from auxiliares.entradas import (
     pedir_texto,
     pedir_entero,
@@ -22,6 +27,12 @@ from auxiliares.mensajes import (
     titulo_actualizar_producto,
     estas_seguro,
     opcion_cancelada,
+    id_debe_ser_entero,
+    no_existe,
+    confirmar_borrar_producto,
+    operacion_exitosa,
+    categoria_no_borrada,
+    opcion_invalida
 )
 
 
@@ -107,3 +118,29 @@ def actualizar_datos_producto():
         id_producto, nombre, descripcion, categoria, sku,
         precio_costo, precio_venta, fecha_vencimiento, fecha_elaboracion
     )
+    
+
+def solicitar_desactivar_producto():
+    try:
+        id_producto = int(input("Ingrese el ID del producto: "))
+    except ValueError:
+        print(id_debe_ser_entero)
+        return
+    
+    producto = obtener_producto(id_producto)
+    
+    if producto is None:
+        print(no_existe(producto))
+        return
+    
+    confirmar = input(confirmar_borrar_producto(producto.nombre)).lower()
+    if confirmar == "s":
+        resultado = desactivar_categoria(id_producto)
+        if resultado:
+            print(operacion_exitosa)
+        else:
+            print(categoria_no_borrada)
+    elif confirmar == "n":
+            print(opcion_cancelada)
+    else:
+            print(opcion_invalida) 

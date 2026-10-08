@@ -25,7 +25,7 @@ def confirmar_borrar_categoria(respuesta):
 def categoria_borrada_exito(nombre):
     return f"Categoria '{nombre}' borrada con exito."
 
-categoria_no_borrada = 'No se pudo borrar la categoria.'
+categoria_no_borrada = 'No se pudo borrar.'
 
 # Respuestas generales
 solo_numeros_enteros = 'Ingresa solo numeros Enteros.'
@@ -57,3 +57,6 @@ def titulo_actualizar_producto(id_producto):
 
 def pregunta_modificar(campo, valor_actual):
     return f'¿Deseas modificar {campo} ({valor_actual})? (s/n): '
+
+def confirmar_borrar_producto(respuesta):
+    return f'Estas seguro de borrar el producto: {respuesta}?  (S/N): '
