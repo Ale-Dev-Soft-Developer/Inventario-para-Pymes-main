@@ -9,8 +9,8 @@ menu_superior = {
     '0':'Salir'
 }
 submenu_categoria = {
-    '1':'Registrar Categoria',
-    '2':'Editar Categoria',
+    '1':'Ver la tabla de Categoria',
+    '2':'Registrar Categoria',
     '3':'Eliminar Categoria',
     '4':'Volver al menú principal',
     '5':'Ver Categorias',

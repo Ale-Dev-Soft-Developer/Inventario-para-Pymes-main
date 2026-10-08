@@ -1,4 +1,4 @@
-from datos.repositorios.repositorio_categoria import listado_categorias,guardar_categoria,actualizar_categoria
+from datos.repositorios.repositorio_categoria import listado_categorias as obtener_listado_categoria,guardar_categoria,actualizar_categoria
 from datos.modelos.categoria import Categoria
 from prettytable import PrettyTable
 
@@ -8,7 +8,7 @@ def listado_categorias():
     tabla_categoria = PrettyTable()
     tabla_categoria.field_names = ["ID", "Nombre", "Descripción"]
     
-    data_de_categorias = listado_categorias() #instancia para revisar la data de la tabla
+    data_de_categorias = obtener_listado_categoria() #instancia para revisar la data de la tabla
     
     if data_de_categorias:
         
