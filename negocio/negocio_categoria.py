@@ -14,10 +14,13 @@ def listado_categorias():
     if data_de_categorias:
         
         for categoria in data_de_categorias:
-            tabla_categoria.add_row([categoria.id_categoria, categoria.nombre, categoria.descripcion])
+            tabla_categoria.add_row([categoria.id_categoria,
+                                     categoria.nombre,
+                                     categoria.descripcion
+                                     ])
         print(tabla_categoria)
     
-    if not data_de_categorias:
+    if not data_de_categorias :
         print(no_existe(data_de_categorias))
 
 #POST    
@@ -25,7 +28,7 @@ def crear_categoria(nombre,descripcion):
     nueva_categoria = Categoria()
     nueva_categoria.nombre = nombre
     nueva_categoria.descripcion = descripcion
-    guardar_categoria(nueva_categoria)
+    return guardar_categoria(nueva_categoria)
 
 
 #GET_FOR_ID

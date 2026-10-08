@@ -1,5 +1,6 @@
 from datos.modelos.categoria import Categoria
 from peewee import IntegrityError, OperationalError, DataError, PeeweeException
+from auxiliares.mensajes import operacion_exitosa
 
 #GET 
 def listado_categorias():
@@ -30,7 +31,7 @@ def guardar_categoria(categoria:Categoria):
 def actualizar_categoria(categoria:Categoria):
     try:
         categoria.save()
-        print("Se ha actualizado")
+        print(operacion_exitosa)
         return True
     
     except IntegrityError as e:
