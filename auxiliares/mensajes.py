@@ -21,11 +21,14 @@ def categoria_borrada_exito(nombre):
     return f"Categoria '{nombre}' borrada con exito."
 
 
+
 #def no_se_pudo_borrar(nombre):
     #return f'No se pudo borrar {nombre}'
 
 categoria_no_borrada = 'No se pudo borrar la categoria.'
 
 # Respuestas generales
+solo_numeros_enteros = 'Ingresa solo numeros Enteros.'
 opcion_cancelada = 'Opcion Cancelada.'
 opcion_invalida = 'Opcion invalida.'
+programa_finalizado = 'Programa Finalizado'

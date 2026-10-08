@@ -1,6 +1,7 @@
 from auxiliares import nombre_aplicacion,version_aplicacion
 from auxiliares.menu import submenu_bodega,menu_superior, submenu_producto,submenu_categoria,submenu_proveedor
-from negocio.negocio_categoria import listado_categorias
+from auxiliares.mensajes import opcion_invalida,opcion_cancelada,solo_numeros_enteros,programa_finalizado,ingrese_id_categoria,ingrese_nombre_categoria,ingrese_descripcion_categoria
+from negocio.negocio_categoria import listado_categorias,actualizar_categoria_existente
 from presentacion.presentacion_categoria import solicitar_datos_categoria
 
 
@@ -16,7 +17,7 @@ def menu_principal():
         try:
             opcion = int(input('\nIngrese su opción [0-7]: ').strip())
         except ValueError:
-            print("Ingresa solo numeros enteros.")
+            print(solo_numeros_enteros)
             continue
 
         if opcion == 1:
@@ -28,9 +29,9 @@ def menu_principal():
         elif opcion == 4:
             menu_proveedor()
         elif opcion == 0:
-            print("Programa Finalizado.")
+            print(programa_finalizado)
         else:
-            print("Opcion invalida.")
+            print(opcion_invalida)
 
 
 def menu_categoria():
@@ -43,15 +44,24 @@ def menu_categoria():
         try:
             opcion = int(input('\nIngrese su opción [0-2]: ').strip())
         except ValueError:
-            print("Ingresa solo numeros enteros.")
+            print(solo_numeros_enteros)
             continue
 
         if opcion == 1:
             listado_categorias()
         elif opcion == 2:
             solicitar_datos_categoria()
+        elif opcion == 3:
+            listado_categorias()
+            
+            id_categoria = int(input(ingrese_id_categoria))
+            nombre_categoria = input(ingrese_nombre_categoria)
+            descripcion_categoria = input(ingrese_descripcion_categoria)
+            
+            actualizar_categoria_existente(id_categoria,nombre_categoria,descripcion_categoria)
+        
         elif opcion != 0:
-            print("Opcion invalida.")
+            print(opcion_invalida)
 
 
 def menu_producto():
@@ -64,13 +74,13 @@ def menu_producto():
         try:
             opcion = int(input('\nIngrese su opción [0-4]: ').strip())
         except ValueError:
-            print("Ingresa solo numeros enteros.")
+            print(solo_numeros_enteros)
             continue
 
         if opcion == 1:
             pass
         elif opcion != 0:
-            print("Opcion invalida.")
+            print(opcion_invalida)
 
 
 def menu_bodega():
@@ -83,13 +93,13 @@ def menu_bodega():
         try:
             opcion = int(input('\nIngrese su opción [0-4]: ').strip())
         except ValueError:
-            print("Ingresa solo numeros enteros.")
+            print(solo_numeros_enteros)
             continue
 
         if opcion == 1:
             pass
         elif opcion != 0:
-            print("Opcion invalida.")
+            print(opcion_invalida)
 
 
 def menu_proveedor():
@@ -102,12 +112,10 @@ def menu_proveedor():
         try:
             opcion = int(input('\nIngrese su opción [0-4]: ').strip())
         except ValueError:
-            print("Ingresa solo numeros enteros.")
+            print(solo_numeros_enteros)
             continue
 
         if opcion == 1:
             pass
         elif opcion != 0:
-            print("Opcion invalida.")
-
-                                
+            print(opcion_invalida)

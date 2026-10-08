@@ -1,5 +1,5 @@
 from negocio.negocio_categoria import actualizar_categoria_existente, crear_categoria, obtener_categoria,desactivar_categoria,activar_categoria
-from auxiliares.mensajes import ingrese_descripcion_categoria,ingrese_nombre_categoria,confirmar_borrar_categoria,categoria_borrada_exito,categoria_no_borrada,ingrese_id_categoria,opcion_cancelada,opcion_invalida,categoria_no_existe,id_debe_ser_entero
+from auxiliares.mensajes import ingrese_descripcion_categoria,ingrese_nombre_categoria,confirmar_borrar_categoria,categoria_borrada_exito,categoria_no_borrada,ingrese_id_categoria,opcion_cancelada,opcion_invalida,id_debe_ser_entero,no_existe
 
 def solicitar_datos_categoria():
     
@@ -9,8 +9,13 @@ def solicitar_datos_categoria():
         nombre = input(f"{ingrese_nombre_categoria}")
     while descripcion == "":    
         descripcion = input(f"{ingrese_descripcion_categoria}")
-    
-    return crear_categoria(nombre,descripcion)
+        
+        print(f"Ingresaras la Categoria: {nombre}, con la descripcion: {descripcion}")
+        confirmacion = input("¿Estas seguro? S/N: ").upper()
+        if confirmacion == 's':
+            return crear_categoria(nombre,descripcion)
+        else:
+            print(opcion_cancelada)
     
 
 def actualizar_datos_categoria():
@@ -27,7 +32,7 @@ def actualizar_datos_categoria():
 
     # Si no encontro la categoria se detiene la funcion actual
     if categoria is None:
-        print(categoria_no_existe)
+        print(no_existe(categoria))
         return 
 
     nombre = descripcion = ""
@@ -50,7 +55,7 @@ def solicitar_desactivar_categoria():
     categoria = obtener_categoria(id_categoria)
 
     if categoria is None:
-        print(categoria_no_existe)
+        print(no_existe(categoria))
         return 
 
     confirmar = input(confirmar_borrar_categoria({confirmar})).strip().upper()
@@ -76,7 +81,7 @@ def solicitar_activar_categoria():
     categoria = obtener_categoria(id_categoria)
 
     if categoria is None:
-        print(categoria_no_existe)
+        print(no_existe(categoria))
         return 
 
     return activar_categoria(id_categoria)
