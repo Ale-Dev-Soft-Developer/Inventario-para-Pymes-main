@@ -1,9 +1,9 @@
 from datos.modelos.categoria import Categoria
 from peewee import IntegrityError, OperationalError, DataError, PeeweeException
 
-#GET
+#GET 
 def listado_categorias():
-    categorias = Categoria.select()
+    categorias = Categoria.select().where(Categoria.estado == True) #para ocultar las de borrado logico
     if categorias:
         return categorias
     
@@ -30,7 +30,7 @@ def guardar_categoria(categoria:Categoria):
 def actualizar_categoria(categoria:Categoria):
     try:
         categoria.save()
-        print(f"Se ha actualizado {categoria.nombre}")
+        print("Se ha actualizado")
         return True
     
     except IntegrityError as e:
@@ -44,4 +44,20 @@ def actualizar_categoria(categoria:Categoria):
     
     return False
         
-#DELETE por desarrollar
+#DELETE
+def borrado_logico_categoria(categoria:Categoria):
+    try:
+            categoria.estado = False
+            categoria.save()
+            return True
+        
+    except IntegrityError as e:
+            print(f"Error al actualizar la categoría: {e}")
+    except OperationalError as e:
+            print(f"Error de operación: {e}")
+    except DataError as e:
+            print(f"Error de base de datos: {e}")
+    except PeeweeException as e:
+            print(f"Error de Peewee: {e}")
+        
+    return False

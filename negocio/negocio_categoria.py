@@ -1,8 +1,9 @@
-from datos.repositorios.repositorio_categoria import listado_categorias as obtener_listado_categoria,guardar_categoria,actualizar_categoria
+from datos.repositorios.repositorio_categoria import listado_categorias as obtener_listado_categoria,guardar_categoria,actualizar_categoria,borrado_logico_categoria
 from datos.modelos.categoria import Categoria
 from prettytable import PrettyTable
+from auxiliares.mensajes import no_existe
 
-
+#GET
 def listado_categorias():
     
     tabla_categoria = PrettyTable()
@@ -17,23 +18,25 @@ def listado_categorias():
         print(tabla_categoria)
     
     if not data_de_categorias:
-        print("No hay ninguna Categoria registrada")
+        print(no_existe(data_de_categorias))
 
-    
-def crear_categoria(nombre,descripion): 
+#POST    
+def crear_categoria(nombre,descripcion): 
     nueva_categoria = Categoria()
     nueva_categoria.nombre = nombre
-    nueva_categoria.descripcion = descripion
+    nueva_categoria.descripcion = descripcion
     guardar_categoria(nueva_categoria)
 
 
+#GET_FOR_ID
 def obtener_categoria(id_categoria):
     
     try: 
         return Categoria[id_categoria]
     except Categoria.DoesNotExist:
         return None
-    
+
+#UPDATE_FOR_ID    
 def actualizar_categoria_existente(id_categoria,nombre,descripcion):
     
     categoria = obtener_categoria(id_categoria)
@@ -46,6 +49,7 @@ def actualizar_categoria_existente(id_categoria,nombre,descripcion):
     categoria.descripcion = descripcion
     
     actualizar_categoria(categoria)
+
     
 # Metodo para Eliminar Categoria (borrado logico)
 def desactivar_categoria(id_categoria):
@@ -56,7 +60,7 @@ def desactivar_categoria(id_categoria):
 
     # estado es un booleano, solo necesito cambiarlo a False para desactivarlo
     categoria.estado = False
-    return guardar_categoria(categoria)
+    return borrado_logico_categoria(categoria)
 
 # Metodo para activar Categoria
 def activar_categoria(id_categoria):
