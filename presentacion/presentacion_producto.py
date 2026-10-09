@@ -1,8 +1,7 @@
 from negocio.negocio_producto import(crear_producto,
                                      obtener_producto,
                                      actualizar_producto_existente,
-                                     listado_productos,
-                                     desactivar_categoria)
+                                     desactivar_producto)
 
 from auxiliares.entradas import (
     pedir_texto,
@@ -134,8 +133,9 @@ def solicitar_desactivar_producto():
         return
     
     confirmar = input(confirmar_borrar_producto(producto.nombre)).lower()
+    
     if confirmar == "s":
-        resultado = desactivar_categoria(id_producto)
+        resultado = desactivar_producto(id_producto)
         if resultado:
             print(operacion_exitosa)
         else:

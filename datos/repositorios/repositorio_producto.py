@@ -17,7 +17,7 @@ def guardar_producto(producto:Producto):
         return True
     
     except IntegrityError as e:
-            print(f"Error al guardar Producto {Producto.nombre}: {e}")
+            print(f"Error al guardar Producto {producto.nombre}: {e}")
     except OperationalError as e:
             print(f"Error de operación: {e}")
     except DataError as e:
@@ -32,10 +32,10 @@ def guardar_producto(producto:Producto):
 def actualizar_producto(producto:Producto):
     try:
         producto.save()
-        print(operacion_exitosa)
+        return True
         
     except IntegrityError as e:
-        print(f"Error al actualizar la categoría: {e}")
+        print(f"Error al actualizar el Producto: {e}")
     except OperationalError as e:
         print(f"Error de operación: {e}")
     except DataError as e:
@@ -54,7 +54,7 @@ def borrado_logico_producto(producto:Producto):
         return True
     
     except IntegrityError as e:
-        print(f"Error al actualizar la categoría: {e}")
+        print(f"Error al borrar el Producto: {e}")
     except OperationalError as e:
         print(f"Error de operación: {e}")
     except DataError as e:

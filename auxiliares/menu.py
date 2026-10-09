@@ -19,7 +19,8 @@ submenu_producto = {
     '1':'Registrar producto',
     '2':'Editar producto',
     '3':'Eliminar producto',
-    '4':'Volver al menú principal',
+    '4':'Ver productos',
+    '5':'Volver al menú principal',
     '0':'Salir'
 }
 submenu_bodega = {

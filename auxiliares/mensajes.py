@@ -47,6 +47,11 @@ ingrese_fecha_vencimiento = 'Ingrese la fecha de vencimiento (AAAA-MM-DD) o Ente
 ingrese_fecha_elaboracion = 'Ingrese la fecha de elaboracion (AAAA-MM-DD) o Enter si no aplica: '
 producto_por_id_no_existe = 'No existe un producto con el ID ingresado.'
 
+
+# Validaciones de entrada
+campo_obligatorio = 'Este campo no puede estar vacio.'
+fecha_invalida = 'Fecha invalida. Use el formato AAAA-MM-DD.'
+
 def ingresaras_producto(nombre, descripcion):
     return f'Ingresaras el Producto: {nombre}, con la descripcion: {descripcion}'
 

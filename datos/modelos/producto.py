@@ -1,6 +1,6 @@
 from peewee import CharField,AutoField,BooleanField,SQL,ForeignKeyField,Model,IntegerField,DateField
 from auxiliares.mensajes import valor_por_defecto
-from datos.modelos import BaseModel
+from datos.modelos.models import BaseModel
 from datos.modelos.categoria import Categoria as Categorias
 
 

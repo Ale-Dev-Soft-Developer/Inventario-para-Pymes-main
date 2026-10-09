@@ -75,7 +75,7 @@ def actualizar_producto_existente(id_producto,nombre,descripcion,categoria,sku,p
 
 #DELETE
 # Metodo para (borrado logico)
-def desactivar_categoria(id_producto):
+def desactivar_producto(id_producto):
     producto = obtener_producto(id_producto)
 
     if producto is None:

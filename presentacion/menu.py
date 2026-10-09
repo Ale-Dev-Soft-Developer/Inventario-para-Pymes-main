@@ -3,7 +3,8 @@ from auxiliares.menu import submenu_bodega,menu_superior, submenu_producto,subme
 from auxiliares.mensajes import opcion_invalida,opcion_cancelada,solo_numeros_enteros,programa_finalizado,ingrese_id_categoria,ingrese_nombre_categoria,ingrese_descripcion_categoria
 from negocio.negocio_categoria import listado_categorias,actualizar_categoria_existente
 from presentacion.presentacion_categoria import solicitar_datos_categoria,actualizar_datos_categoria,solicitar_desactivar_categoria
-
+from negocio.negocio_producto import listado_productos
+from presentacion.presentacion_producto import solicitar_datos_producto,actualizar_datos_producto,solicitar_desactivar_producto
 
 #dejar mas expedito el menu principal, sin tantos bucles anidados. Ordenar el codigo.
 def menu_principal():
@@ -57,6 +58,8 @@ def menu_categoria():
         elif opcion == 4:
             listado_categorias()
             solicitar_desactivar_categoria()
+        elif opcion == 0:
+            menu_principal()
         elif opcion != 0:
             print(opcion_invalida)
 
@@ -75,7 +78,16 @@ def menu_producto():
             continue
 
         if opcion == 1:
-            pass
+            solicitar_datos_producto()
+        elif opcion == 2:
+            listado_productos()
+            actualizar_datos_producto()
+        elif opcion == 3:
+            solicitar_desactivar_producto()
+        elif opcion == 4:
+            listado_productos()
+        elif opcion == 5:
+            menu_principal()
         elif opcion != 0:
             print(opcion_invalida)
 
