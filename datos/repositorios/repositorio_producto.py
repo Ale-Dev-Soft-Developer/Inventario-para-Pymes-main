@@ -31,7 +31,7 @@ def guardar_producto(producto:Producto):
 #PUT 
 def actualizar_producto(producto:Producto):
     try:
-        producto.save()
+        producto.update()
         return True
         
     except IntegrityError as e:
@@ -50,7 +50,7 @@ def actualizar_producto(producto:Producto):
 def borrado_logico_producto(producto:Producto):
     try: 
         producto.estado = False
-        producto.save()
+        producto.update()
         return True
     
     except IntegrityError as e:
