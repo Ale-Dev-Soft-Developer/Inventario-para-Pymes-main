@@ -8,6 +8,9 @@ def listado_proveedor():
     if proveedor:
         return proveedor
     
+    if not proveedor:
+        return False
+    
 
 #POST
 def guardar_proveedor(proveedor:Proveedor):

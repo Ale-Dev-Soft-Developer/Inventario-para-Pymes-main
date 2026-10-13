@@ -48,6 +48,18 @@ ingrese_fecha_elaboracion = 'Ingrese la fecha de elaboracion (AAAA-MM-DD) o Ente
 producto_por_id_no_existe = 'No existe un producto con el ID ingresado.'
 
 
+#Proveedor
+ingrese_nombre_proveedor = 'Ingrese el nombre del Proveedor: '
+ingrese_rut_proveedor = 'Ingrese el rut del Proveedor: '
+ingrese_telefono_proveedor = 'Ingrese el numero de contacto del Proveedor: '
+ingrese_correo_proveedor = 'Ingrese el correo electronico del Proveedor: '
+
+#Direccion_proveedor
+ingrese_ciudad_proveedor = 'Ingrese el nombre de la Ciudad: '
+ingrese_comuna_proveedor = 'Ingrese el nombre de la Comuna: '
+ingrese_numero_proveedor = 'Ingrese el numero del Domicilio si aplica: '
+ingrese_calle_proveedor = 'Ingrese el nombre de la Calle: '
+
 # Validaciones de entrada
 campo_obligatorio = 'Este campo no puede estar vacio.'
 fecha_invalida = 'Fecha invalida. Use el formato AAAA-MM-DD.'
