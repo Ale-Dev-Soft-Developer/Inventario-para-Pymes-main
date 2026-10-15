@@ -1,10 +1,19 @@
+from peewee import (IntegrityError,
+                    OperationalError,
+                    DataError,
+                    PeeweeException)
 from datos.modelos.proveedor import Proveedor
-from peewee import IntegrityError,OperationalError,DataError,PeeweeException
+from auxiliares.mensajes import (excepcion_data_error,
+                                excepcion_intregity,
+                                excepcion_operational_error,
+                                excepcion_peewee)
 
 
 #Metodo GET
 def listado_proveedor():
+    
     proveedor = Proveedor.select()
+    
     if proveedor:
         return proveedor
     
@@ -14,17 +23,18 @@ def listado_proveedor():
 
 #POST
 def guardar_proveedor(proveedor:Proveedor):
+    
     try:
         return proveedor.save()
     
     except IntegrityError as e:
-            print(f"Error al guardar Producto {proveedor.nombre}: {e}")
+            excepcion_intregity(e)
     except OperationalError as e:
-            print(f"Error de operación: {e}")
+            excepcion_operational_error(e)
     except DataError as e:
-            print(f"Error de base de datos: {e}")
+            excepcion_data_error(e)
     except PeeweeException as e:
-            print(f"Error de Peewee: {e}")
+            excepcion_peewee(e)
             
     return False
 
@@ -36,19 +46,20 @@ def obtener_proveedor_por_id(id_proveedor):
 
 #DELETE
 def borrado_logico_proveedor(proveedor:Proveedor):
+    
     try:
         proveedor.estado = False
-        proveedor.update()
+        proveedor.save()
         return True
     
     except IntegrityError as e:
-            print(f"Error al guardar Producto {proveedor.nombre}: {e}")
+            excepcion_intregity(e)
     except OperationalError as e:
-            print(f"Error de operación: {e}")
+            excepcion_operational_error(e)
     except DataError as e:
-            print(f"Error de base de datos: {e}")
+            excepcion_data_error(e)
     except PeeweeException as e:
-            print(f"Error de Peewee: {e}")
+            excepcion_peewee(e)
             
     return False
 

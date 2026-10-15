@@ -72,13 +72,27 @@ ingrese_calle_proveedor = 'Ingrese el nombre de la Calle: '
 campo_obligatorio = 'Este campo no puede estar vacio.'
 fecha_invalida = 'Fecha invalida. Use el formato AAAA-MM-DD.'
 
+
+#Exepciones
+def excepcion_intregity(excepcion):
+    return f'Error de {excepcion}'
+
+def excepcion_operational_error(excepcion):
+    return f'Error de {excepcion}'
+
+def excepcion_data_error(excepcion):
+    return f'Error de {excepcion}'
+
+def excepcion_peewee(excepcion):
+    return f'Error de {excepcion}'
+
+
+
 def ingresaras_producto(nombre, descripcion):
     return f'Ingresaras el Producto: {nombre}, con la descripcion: {descripcion}'
 
-
 def titulo_actualizar_producto(id_producto):
     return f'\n--- Actualizando producto ID {id_producto} ---'
-
 
 def pregunta_modificar(campo, valor_actual):
     return f'¿Deseas modificar {campo} ({valor_actual})? (s/n): '

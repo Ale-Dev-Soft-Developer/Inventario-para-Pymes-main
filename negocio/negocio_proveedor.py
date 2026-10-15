@@ -4,12 +4,13 @@ from datos.repositorios.repositorio_proveedor import( listado_proveedor as obten
                                                      borrado_logico_proveedor,
                                                      existe_rut,
                                                      existe_correo,
-                                                     existe_telefono,
-                                                     
-                                                    )
-from negocio.negocio_direccion import (crear_direccion,actualizar_direccion)
+                                                     existe_telefono)
+
+from negocio.negocio_direccion import (crear_direccion,
+                                       actualizar_direccion)
 from datos.repositorios.repositorio_direccion import guardar_direcciones
-from datos.repositorios.repositorio_proveedor import obtener_proveedor_por_id,guardar_proveedor
+from datos.repositorios.repositorio_proveedor import (obtener_proveedor_por_id,
+                                                      guardar_proveedor)
 from datos.modelos.proveedor import Proveedor
 from prettytable import PrettyTable
 from auxiliares.mensajes import no_existe
