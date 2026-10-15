@@ -7,7 +7,7 @@ from auxiliares.mensajes import no_existe
 def listado_categorias():
     
     tabla_categoria = PrettyTable()
-    tabla_categoria.field_names = ["ID", "Nombre", "Descripción"]
+    tabla_categoria.field_names = ["ID", "Nombre", "Descripción","Estado"]
     
     data_de_categorias = obtener_listado_categoria() #instancia para revisar la data de la tabla
     
@@ -16,7 +16,8 @@ def listado_categorias():
         for categoria in data_de_categorias:
             tabla_categoria.add_row([categoria.id_categoria,
                                      categoria.nombre,
-                                     categoria.descripcion
+                                     categoria.descripcion,
+                                     ('Inhabilitado', 'Habilitado')[categoria.estado]
                                      ])
         print(tabla_categoria)
     

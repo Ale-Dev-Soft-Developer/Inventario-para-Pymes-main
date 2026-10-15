@@ -15,9 +15,7 @@ def listado_proveedor():
 #POST
 def guardar_proveedor(proveedor:Proveedor):
     try:
-        guardar = proveedor.save()
-        print(guardar)
-        return True
+        return proveedor.save()
     
     except IntegrityError as e:
             print(f"Error al guardar Producto {proveedor.nombre}: {e}")
@@ -31,22 +29,9 @@ def guardar_proveedor(proveedor:Proveedor):
     return False
 
 
-#UPDATE
-def actualizar_proveedor(proveedor:Proveedor):
-    try:
-        proveedor.update()
-        return True
-    
-    except IntegrityError as e:
-            print(f"Error al guardar Producto {proveedor.nombre}: {e}")
-    except OperationalError as e:
-            print(f"Error de operación: {e}")
-    except DataError as e:
-            print(f"Error de base de datos: {e}")
-    except PeeweeException as e:
-            print(f"Error de Peewee: {e}")
-            
-    return False
+def obtener_proveedor_por_id(id_proveedor):
+    return Proveedor.get_or_none(Proveedor.id_proveedor == id_proveedor)
+
 
 
 #DELETE

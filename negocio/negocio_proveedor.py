@@ -9,6 +9,7 @@ from datos.repositorios.repositorio_proveedor import( listado_proveedor as obten
                                                     )
 from negocio.negocio_direccion import (crear_direccion,actualizar_direccion)
 from datos.repositorios.repositorio_direccion import guardar_direcciones
+from datos.repositorios.repositorio_proveedor import obtener_proveedor_por_id,guardar_proveedor
 from datos.modelos.proveedor import Proveedor
 from prettytable import PrettyTable
 from auxiliares.mensajes import no_existe
@@ -135,7 +136,7 @@ def actualizar_proveedor_existente(id_proveedor,nombre,telefono,correo):
 #Idea traida desde la rama de Axwel
 def actualizar_direccion_existente(id_proveedor,ciudad,comuna,calle,numero):
     
-    proveedor = obtener_proveedor(id_proveedor)
+    proveedor = obtener_proveedor_por_id(id_proveedor)
     
     if proveedor == None:
         return False

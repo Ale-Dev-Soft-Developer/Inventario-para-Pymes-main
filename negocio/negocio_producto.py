@@ -24,7 +24,8 @@ def listado_productos():
                 producto.precio_venta,
                 producto.fecha_vencimiento,
                 producto.fecha_elaboracion,
-                producto.estado])
+                 ('Inhabilitado', 'Habilitado')[producto.estado]
+                 ])
         print(tabla_producto)
     
     if not data_de_productos:

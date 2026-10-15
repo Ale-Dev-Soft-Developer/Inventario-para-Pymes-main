@@ -120,11 +120,10 @@ def actualizar_datos_producto():
     
 
 def solicitar_desactivar_producto():
-    try:
-        id_producto = int(input("Ingrese el ID del producto: "))
-    except ValueError:
-        print(id_debe_ser_entero)
-        return
+    
+    #Validacion internma desde auxiliares/entradas.py
+    id_producto = input(pedir_entero(ingrese_id_producto))
+  
     
     producto = obtener_producto(id_producto)
     

@@ -34,6 +34,8 @@ opcion_invalida = 'Operacion invalida.'
 programa_finalizado = 'Programa Finalizado'
 estas_seguro = '¿Estas seguro? S/N: '
 operacion_exitosa = 'Operacion Exitosa'
+ingrese_ID_buscar = "Ingrese el ID que desea buscar: "
+no_se_concreto_la_operacion = 'No se concreto la operacion.'
 
 # Producto
 ingrese_id_producto = 'Ingrese el ID del producto: '
@@ -53,6 +55,12 @@ ingrese_nombre_proveedor = 'Ingrese el nombre del Proveedor: '
 ingrese_rut_proveedor = 'Ingrese el rut del Proveedor: '
 ingrese_telefono_proveedor = 'Ingrese el numero de contacto del Proveedor: '
 ingrese_correo_proveedor = 'Ingrese el correo electronico del Proveedor: '
+ingrese_id_proveedor = 'Ingrese el ID del Proveedor: '
+no_existe_proveedor = 'No existe el Proveedor con el ID ingresado.'
+
+#Rut
+rut_invalido = 'El rut que ingresaste no es valido.'
+rut_existente = 'Este rut ya esta registrado.'
 
 #Direccion_proveedor
 ingrese_ciudad_proveedor = 'Ingrese el nombre de la Ciudad: '
@@ -77,3 +85,9 @@ def pregunta_modificar(campo, valor_actual):
 
 def confirmar_borrar_producto(respuesta):
     return f'Estas seguro de borrar el producto: {respuesta}?  (S/N): '
+
+def titulo_actualizar_proveedor(id_proveedor):
+    return f'\n--- Actualizando Proveedor ID {id_proveedor} ---'
+
+def confirmar_borrar_proveedor(respuesta):
+    return f'Estas seguro de borrar el Proveedor: {respuesta}?  (S/N): '
