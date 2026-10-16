@@ -1,36 +1,13 @@
-from datos.repositorios.repositorio_producto import listado_productos as obtener_listado_productos,guardar_producto,actualizar_producto,borrado_logico_producto
+from datos.repositorios.repositorio_producto import (listado_productos as obtener_listado_productos,
+                                                     guardar_producto,
+                                                     actualizar_producto,
+                                                     borrado_logico_producto)
 from datos.modelos.producto import Producto
-from datos.modelos.categoria import Categoria
-from prettytable import PrettyTable
-from auxiliares.mensajes import no_existe
+
 
 #GET
 def listado_productos():
-    
-    tabla_producto = PrettyTable()
-    tabla_producto.field_names = ["ID", "Nombre", "Descripción", "Categoria", "SKU", "Precio Costo", "Precio Venta", "Fecha Vencimiento", "Fecha Elaboracion", "Estado"]
-    
-    data_de_productos = obtener_listado_productos() #instancia para revisar la data de la tabla
-    
-    if data_de_productos:
-        
-        for producto in data_de_productos:
-            tabla_producto.add_row([
-                producto.id_producto,
-                producto.nombre,
-                producto.descripcion,
-                producto.id_categoria.nombre,
-                producto.sku,
-                producto.precio_costo,
-                producto.precio_venta,
-                producto.fecha_vencimiento,
-                producto.fecha_elaboracion,
-                 ('Inhabilitado', 'Habilitado')[producto.estado]
-                 ])
-        print(tabla_producto)
-    
-    if not data_de_productos:
-        print(no_existe(data_de_productos))
+    return obtener_listado_productos()
         
 
 #POST

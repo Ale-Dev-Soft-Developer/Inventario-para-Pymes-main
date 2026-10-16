@@ -1,28 +1,13 @@
-from datos.repositorios.repositorio_categoria import listado_categorias as obtener_listado_categoria,guardar_categoria,actualizar_categoria,borrado_logico_categoria
+from datos.repositorios.repositorio_categoria import (listado_categorias as obtener_listado_categoria,
+                                                      guardar_categoria,
+                                                      actualizar_categoria,
+                                                      borrado_logico_categoria)
 from datos.modelos.categoria import Categoria
-from prettytable import PrettyTable
-from auxiliares.mensajes import no_existe
+
 
 #GET
-def listado_categorias():
-    
-    tabla_categoria = PrettyTable()
-    tabla_categoria.field_names = ["ID", "Nombre", "Descripción","Estado"]
-    
-    data_de_categorias = obtener_listado_categoria() #instancia para revisar la data de la tabla
-    
-    if data_de_categorias:
-        
-        for categoria in data_de_categorias:
-            tabla_categoria.add_row([categoria.id_categoria,
-                                     categoria.nombre,
-                                     categoria.descripcion,
-                                     ('Inhabilitado', 'Habilitado')[categoria.estado]
-                                     ])
-        print(tabla_categoria)
-    
-    if not data_de_categorias :
-        print(no_existe(data_de_categorias))
+def listado_categoria():
+    return obtener_listado_categoria()
 
 #POST    
 def crear_categoria(nombre,descripcion): 

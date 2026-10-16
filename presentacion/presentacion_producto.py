@@ -1,5 +1,5 @@
 from negocio.negocio_producto import(crear_producto,
-                                     obtener_producto,
+                                     listado_productos,
                                      actualizar_producto_existente,
                                      desactivar_producto)
 
@@ -31,9 +31,38 @@ from auxiliares.mensajes import (
     confirmar_borrar_producto,
     operacion_exitosa,
     categoria_no_borrada,
-    opcion_invalida
+    opcion_invalida,
+    no_existe_registro
 )
+from prettytable import PrettyTable
+from datos.modelos.producto import Producto
 
+
+
+def listado_productos():
+    
+    productos = listado_productos()
+    
+    if not productos:
+        print(no_existe_registro(Producto))
+    
+    tabla_producto = PrettyTable()
+    tabla_producto.field_names = ["ID", "Nombre", "Descripción", "Categoria", "SKU", "Precio Costo", "Precio Venta", "Fecha Vencimiento", "Fecha Elaboracion", "Estado"]
+        
+    for producto in productos:
+            tabla_producto.add_row([
+                producto.id_producto,
+                producto.nombre,
+                producto.descripcion,
+                producto.id_categoria.nombre,
+                producto.sku,
+                producto.precio_costo,
+                producto.precio_venta,
+                producto.fecha_vencimiento,
+                producto.fecha_elaboracion,
+                 ('Inhabilitado', 'Habilitado')[producto.estado]
+                 ])
+    print(tabla_producto)
 
 def solicitar_datos_producto():
     nombre = pedir_texto(ingrese_nombre_producto)

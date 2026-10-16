@@ -10,6 +10,7 @@ def listado_productos():
                  .join(Categoria))
     if productos:
         return productos
+    return False
     
 
 #POST

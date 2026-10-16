@@ -1,26 +1,33 @@
 from auxiliares import (nombre_aplicacion,
                         version_aplicacion)
+
 from auxiliares.menu import (submenu_bodega,
                              menu_superior,
                              submenu_producto,
                              submenu_categoria,
                              submenu_proveedor,
                              submenu_almacen)
+
 from auxiliares.mensajes import (opcion_invalida,
                                  solo_numeros_enteros,
                                  programa_finalizado)
-from negocio.negocio_categoria import (listado_categorias)
+
+
 from presentacion.presentacion_categoria import (solicitar_datos_categoria,
                                                  actualizar_datos_categoria,
-                                                 solicitar_desactivar_categoria)
-from negocio.negocio_producto import listado_productos
+                                                 solicitar_desactivar_categoria,
+                                                 listado_categorias)
+
 from presentacion.presentacion_producto import (solicitar_datos_producto,
                                                 actualizar_datos_producto,
-                                                solicitar_desactivar_producto)
+                                                solicitar_desactivar_producto,
+                                                listado_productos)
+
 from presentacion.presentacion_proveedor import (mostrar_proveedores,
                                                  solicitar_datos_proveedor,
                                                  actualizar_datos_proveedor,
                                                  solicitar_desactivar_proveedor)
+
 
 #dejar mas expedito el menu principal, sin tantos bucles anidados. Ordenar el codigo.
 def menu_principal():
@@ -149,6 +156,7 @@ def menu_proveedor():
         if opcion == 1:
             solicitar_datos_proveedor()
         elif opcion == 2:
+            mostrar_proveedores()
             actualizar_datos_proveedor()
         elif opcion == 3:
             mostrar_proveedores()

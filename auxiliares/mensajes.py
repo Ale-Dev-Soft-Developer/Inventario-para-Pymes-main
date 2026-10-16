@@ -48,6 +48,7 @@ ingrese_precio_venta = 'Ingrese el precio de venta del producto: '
 ingrese_fecha_vencimiento = 'Ingrese la fecha de vencimiento (AAAA-MM-DD) o Enter si no aplica: '
 ingrese_fecha_elaboracion = 'Ingrese la fecha de elaboracion (AAAA-MM-DD) o Enter si no aplica: '
 producto_por_id_no_existe = 'No existe un producto con el ID ingresado.'
+no_hay_productos = 'No existen productos registrados'
 
 
 #Proveedor
@@ -57,6 +58,7 @@ ingrese_telefono_proveedor = 'Ingrese el numero de contacto del Proveedor: '
 ingrese_correo_proveedor = 'Ingrese el correo electronico del Proveedor: '
 ingrese_id_proveedor = 'Ingrese el ID del Proveedor: '
 no_existe_proveedor = 'No existe el Proveedor con el ID ingresado.'
+no_hay_proveedores = 'No existen proveedores registrados'
 
 #Rut
 rut_invalido = 'El rut que ingresaste no es valido.'
@@ -105,3 +107,6 @@ def titulo_actualizar_proveedor(id_proveedor):
 
 def confirmar_borrar_proveedor(respuesta):
     return f'Estas seguro de borrar el Proveedor: {respuesta}?  (S/N): '
+
+def no_existe_registro(objeto):
+    return f'No existe registro sobre: {objeto}'

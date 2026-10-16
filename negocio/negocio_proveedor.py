@@ -11,31 +11,10 @@ from datos.repositorios.repositorio_direccion import guardar_direcciones
 from datos.repositorios.repositorio_proveedor import (obtener_proveedor_por_id,
                                                       guardar_proveedor)
 from datos.modelos.proveedor import Proveedor
-from prettytable import PrettyTable
-from auxiliares.mensajes import no_existe
 
 #GET
 def listado_proveedor():
-    tabla_proveedor = PrettyTable()
-    tabla_proveedor.field_names = ["ID","Nombre","Rut","Correo","Telefono","Direccion","Estado"]
-    
-    data_de_proveedor = obtener_listado_proveedor()
-    
-    if data_de_proveedor:
-        for proveedor in data_de_proveedor:
-            tabla_proveedor.add_row([
-                proveedor.id_proveedor,
-                proveedor.nombre,
-                proveedor.rut,
-                proveedor.correo,
-                proveedor.telefono,
-                proveedor.id_direccion,
-                proveedor.estado
-            ])
-            print(data_de_proveedor)
-            
-    if not data_de_proveedor:
-        print(no_existe(data_de_proveedor))
+    return obtener_listado_proveedor()
         
 
 #Validacion de Rut

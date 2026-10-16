@@ -4,12 +4,15 @@ from auxiliares.mensajes import operacion_exitosa
 
 #GET 
 def listado_categorias():
+    
     categorias = Categoria.select().where(Categoria.estado == True) #para ocultar las de borrado logico
+    
     if categorias:
         return categorias
+    return False
     
 
-#POST
+#POST_AND_UPDATE
 def guardar_categoria(categoria:Categoria):
     try: 
         guardar = categoria.save()

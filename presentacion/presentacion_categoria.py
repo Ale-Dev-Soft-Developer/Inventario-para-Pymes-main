@@ -1,5 +1,48 @@
-from negocio.negocio_categoria import actualizar_categoria_existente, crear_categoria, obtener_categoria,desactivar_categoria,activar_categoria
-from auxiliares.mensajes import ingrese_descripcion_categoria,ingrese_nombre_categoria,confirmar_borrar_categoria,categoria_borrada_exito,categoria_no_borrada,ingrese_id_categoria,opcion_cancelada,opcion_invalida,id_debe_ser_entero,no_existe,ingresaras_lo_siguiente,estas_seguro
+from negocio.negocio_categoria import (actualizar_categoria_existente,
+                                       crear_categoria,
+                                       listado_categoria,
+                                       desactivar_categoria,
+                                       obtener_categoria)
+
+from auxiliares.entradas import (pedir_entero,pedir_confirmacion)
+
+from auxiliares.mensajes import (ingrese_descripcion_categoria,
+                                 ingrese_nombre_categoria,
+                                 confirmar_borrar_categoria,
+                                 ingrese_id_categoria,
+                                 opcion_cancelada,
+                                 opcion_invalida,
+                                 id_debe_ser_entero,
+                                 no_existe,
+                                 ingresaras_lo_siguiente,
+                                 estas_seguro,
+                                 no_existe_registro,
+                                 operacion_exitosa,
+                                 no_se_concreto_la_operacion)
+
+from prettytable import PrettyTable
+from datos.modelos.categoria import Categoria
+
+def listado_categorias():
+    
+    categorias = listado_categoria()
+    
+    if not categorias:
+        print(no_existe_registro(Categoria))
+    
+    tabla_categoria = PrettyTable()
+    tabla_categoria.field_names = ["ID", "Nombre", "Descripción","Estado"]
+    
+        
+    for categoria in categorias:
+        tabla_categoria.add_row([categoria.id_categoria,
+                                     categoria.nombre,
+                                     categoria.descripcion,
+                                     ('Inhabilitado', 'Habilitado')[categoria.estado]
+                                     ])
+        print(tabla_categoria)
+
+
 
 def solicitar_datos_categoria():
     
@@ -52,42 +95,24 @@ def actualizar_datos_categoria():
         
 
 def solicitar_desactivar_categoria():
-    try:
-        id_categoria = int(input(ingrese_id_categoria))
-    except ValueError:
-        print(id_debe_ser_entero)
-        return
+    
+    #validacion interna de que sea entero.
+    id_categoria = input(pedir_entero(ingrese_id_categoria))
+    
+    categoria_instancia = Categoria()
 
     categoria = obtener_categoria(id_categoria)
 
     if categoria is None:
-        print(no_existe(categoria))
-        return 
+        print(no_existe(categoria)) 
 
-    confirmar = input(confirmar_borrar_categoria(categoria.nombre)).strip().lower()
+    confirmar = input(pedir_confirmacion(confirmar_borrar_categoria))
+    
     if confirmar == "s":
-        resultado = desactivar_categoria(id_categoria)
-        if resultado:
-            print(categoria_borrada_exito(categoria))
+
+        desactivar_categoria(id_categoria)
+        
+        if categoria_instancia.estado is False:
+            print(operacion_exitosa)
         else:
-            print(categoria_no_borrada)
-    elif confirmar == "n":
-        print(opcion_cancelada)
-    else:
-        print(opcion_invalida) 
-
-
-def solicitar_activar_categoria():
-    try:
-        id_categoria = int(input(ingrese_id_categoria))
-    except ValueError:
-        print(id_debe_ser_entero)
-        return
-
-    categoria = obtener_categoria(id_categoria)
-
-    if categoria is None:
-        print(no_existe(categoria))
-        return 
-
-    return activar_categoria(id_categoria)
+            print(no_se_concreto_la_operacion)

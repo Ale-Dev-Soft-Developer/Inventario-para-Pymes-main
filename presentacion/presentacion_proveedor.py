@@ -28,7 +28,8 @@ from auxiliares.mensajes import (ingrese_nombre_proveedor,
                                  operacion_exitosa,
                                  ingrese_id_proveedor,
                                  confirmar_borrar_proveedor,
-                                 no_se_concreto_la_operacion)
+                                 no_se_concreto_la_operacion,
+                                 no_existe_registro)
 from auxiliares.entradas import (desea_modificar,pedir_entero)
 from prettytable import PrettyTable
 from datos.modelos.proveedor import Proveedor
@@ -39,7 +40,7 @@ def mostrar_proveedores():
     proveedores = listado_proveedor()
 
     if not proveedores:
-        print("No hay proveedores registrados.")
+        print(no_existe_registro(Proveedor))
         return
 
     tabla_proveedores = PrettyTable()
@@ -159,14 +160,13 @@ def actualizar_datos_proveedor():
 #DELETE
 def solicitar_desactivar_proveedor():
     
-    listado_proveedor()
-    
     #Validacion interna desde auxiliares/entradas.py
     id_proveedor = input(pedir_entero(ingrese_id_proveedor))
     
     proveedor_instancia = Proveedor()
     
     proveedor = obtener_proveedor(id_proveedor)
+    
     if proveedor is None:
         print(no_existe_proveedor)
         

@@ -11,13 +11,12 @@ from auxiliares.mensajes import (excepcion_data_error,
 
 #Metodo GET
 def listado_proveedor():
-    proveedor = Proveedor.select()
+    
+    proveedor = Proveedor.select().where(Proveedor.estado == True)
+    
     if proveedor:
         return proveedor
-    
-    if not proveedor:
-        return False
-    
+    return False
 
 #POST AND UPDATE
 def guardar_proveedor(proveedor:Proveedor):
