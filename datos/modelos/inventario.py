@@ -1,4 +1,4 @@
-from peewee import CompositeKey, DateField,CharField,AutoField,IntegerField,BooleanField,SQL,ForeignKeyField,Model,DateTimeField
+from peewee import AutoField,SQL,ForeignKeyField
 from decouple import config
 from auxiliares.mensajes import valor_por_defecto
 from datos.conexion import conectar_db

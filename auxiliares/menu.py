@@ -34,7 +34,7 @@ submenu_proveedor = {
     '1':'Registrar proveedor',
     '2':'Editar proveedor',
     '3':'Eliminar proveedor',
-    '4':'Volver al menú principal',
+    '4':'Ver Proveedores',
     '0':'Salir'
 }
 submenu_almacen = {

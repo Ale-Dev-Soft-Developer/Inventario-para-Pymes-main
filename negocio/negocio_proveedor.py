@@ -1,5 +1,4 @@
 from datos.repositorios.repositorio_proveedor import( listado_proveedor as obtener_listado_proveedor,
-                                                     actualizar_proveedor,
                                                      guardar_proveedor,
                                                      borrado_logico_proveedor,
                                                      existe_rut,
@@ -131,7 +130,7 @@ def actualizar_proveedor_existente(id_proveedor,nombre,telefono,correo):
     proveedor.telefono = telefono
     proveedor.correo = correo
     
-    actualizar_proveedor(proveedor)
+    guardar_proveedor(proveedor)
 
 #UPDATE_ONLY_DIRECCION
 #Idea traida desde la rama de Axwel

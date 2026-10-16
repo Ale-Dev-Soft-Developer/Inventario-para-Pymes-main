@@ -19,7 +19,7 @@ def listado_proveedor():
         return False
     
 
-#POST
+#POST AND UPDATE
 def guardar_proveedor(proveedor:Proveedor):
     
     try:

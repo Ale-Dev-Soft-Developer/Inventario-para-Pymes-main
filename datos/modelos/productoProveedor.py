@@ -1,7 +1,7 @@
 from peewee import CharField,AutoField,IntegerField,ForeignKeyField,BooleanField,CompositeKey,SQL
 from auxiliares.mensajes import valor_por_defecto
 from datos.modelos.producto import Producto as Productos
-from datos.modelos.proveedor import Proovedor as Proveedores
+from datos.modelos.proveedor import Proveedor as Proveedores
 from datos.modelos import BaseModel
 
 class ProductoProveedor(BaseModel):

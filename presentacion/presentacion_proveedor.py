@@ -31,7 +31,7 @@ from auxiliares.mensajes import (ingrese_nombre_proveedor,
                                  no_se_concreto_la_operacion)
 from auxiliares.entradas import (desea_modificar,pedir_entero)
 from prettytable import PrettyTable
-from datos.modelos.proveedor import Proovedor
+from datos.modelos.proveedor import Proveedor
 
 
 def mostrar_proveedores():
@@ -157,14 +157,14 @@ def actualizar_datos_proveedor():
 
 
 #DELETE
-def solicitar_desactivar_producto():
+def solicitar_desactivar_proveedor():
     
     listado_proveedor()
     
     #Validacion interna desde auxiliares/entradas.py
     id_proveedor = input(pedir_entero(ingrese_id_proveedor))
     
-    proveedor_instancia = Proovedor()
+    proveedor_instancia = Proveedor()
     
     proveedor = obtener_proveedor(id_proveedor)
     if proveedor is None:

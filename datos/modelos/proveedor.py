@@ -3,7 +3,7 @@ from auxiliares.mensajes import valor_por_defecto
 from datos.modelos.direccion import Direccion as Direcciones
 from datos.modelos import BaseModel
 
-class Proovedor (BaseModel):
+class Proveedor (BaseModel):
     correo = CharField(max_length=100, null=True,unique=True)
     estado = BooleanField(constraints=[SQL(valor_por_defecto)])
     id_direccion = ForeignKeyField(column_name='id_direccion', field='id_direccion', model=Direcciones)

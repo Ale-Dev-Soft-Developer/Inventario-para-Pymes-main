@@ -1,13 +1,30 @@
-from auxiliares import nombre_aplicacion,version_aplicacion
-from auxiliares.menu import submenu_bodega,menu_superior, submenu_producto,submenu_categoria,submenu_proveedor
-from auxiliares.mensajes import opcion_invalida,opcion_cancelada,solo_numeros_enteros,programa_finalizado,ingrese_id_categoria,ingrese_nombre_categoria,ingrese_descripcion_categoria
-from negocio.negocio_categoria import listado_categorias,actualizar_categoria_existente
-from presentacion.presentacion_categoria import solicitar_datos_categoria,actualizar_datos_categoria,solicitar_desactivar_categoria
+from auxiliares import (nombre_aplicacion,
+                        version_aplicacion)
+from auxiliares.menu import (submenu_bodega,
+                             menu_superior,
+                             submenu_producto,
+                             submenu_categoria,
+                             submenu_proveedor,
+                             submenu_almacen)
+from auxiliares.mensajes import (opcion_invalida,
+                                 solo_numeros_enteros,
+                                 programa_finalizado)
+from negocio.negocio_categoria import (listado_categorias)
+from presentacion.presentacion_categoria import (solicitar_datos_categoria,
+                                                 actualizar_datos_categoria,
+                                                 solicitar_desactivar_categoria)
 from negocio.negocio_producto import listado_productos
-from presentacion.presentacion_producto import solicitar_datos_producto,actualizar_datos_producto,solicitar_desactivar_producto
+from presentacion.presentacion_producto import (solicitar_datos_producto,
+                                                actualizar_datos_producto,
+                                                solicitar_desactivar_producto)
+from presentacion.presentacion_proveedor import (mostrar_proveedores,
+                                                 solicitar_datos_proveedor,
+                                                 actualizar_datos_proveedor,
+                                                 solicitar_desactivar_proveedor)
 
 #dejar mas expedito el menu principal, sin tantos bucles anidados. Ordenar el codigo.
 def menu_principal():
+   
     opcion = -1
 
     while opcion != 0:
@@ -16,7 +33,7 @@ def menu_principal():
             print(f'[{clave}] - {valor}')
 
         try:
-            opcion = int(input('\nIngrese su opción [0-7]: ').strip())
+            opcion = int(input('\nIngrese su opción [0-5]: ').strip())
         except ValueError:
             print(solo_numeros_enteros)
             continue
@@ -29,6 +46,8 @@ def menu_principal():
             menu_bodega()
         elif opcion == 4:
             menu_proveedor()
+        elif opcion == 5:
+            menu_almacen()
         elif opcion == 0:
             print(programa_finalizado)
         else:
@@ -36,6 +55,7 @@ def menu_principal():
 
 
 def menu_categoria():
+    
     opcion = -1
 
     while opcion != 0:
@@ -43,7 +63,7 @@ def menu_categoria():
             print(f'[{clave}] - {valor}')
 
         try:
-            opcion = int(input('\nIngrese su opción [0-2]: ').strip())
+            opcion = int(input('\nIngrese su opción [0-4]: ').strip())
         except ValueError:
             print(solo_numeros_enteros)
             continue
@@ -58,13 +78,12 @@ def menu_categoria():
         elif opcion == 4:
             listado_categorias()
             solicitar_desactivar_categoria()
-        elif opcion == 0:
-            menu_principal()
         elif opcion != 0:
             print(opcion_invalida)
 
 
 def menu_producto():
+    
     opcion = -1
 
     while opcion != 0:
@@ -83,16 +102,16 @@ def menu_producto():
             listado_productos()
             actualizar_datos_producto()
         elif opcion == 3:
+            listado_productos()
             solicitar_desactivar_producto()
         elif opcion == 4:
             listado_productos()
-        elif opcion == 5:
-            menu_principal()
         elif opcion != 0:
             print(opcion_invalida)
 
 
 def menu_bodega():
+    
     opcion = -1
 
     while opcion != 0:
@@ -112,19 +131,59 @@ def menu_bodega():
 
 
 def menu_proveedor():
+   
     opcion = -1
 
     while opcion != 0:
+        
         for clave, valor in submenu_proveedor.items():
             print(f'[{clave}] - {valor}')
 
         try:
             opcion = int(input('\nIngrese su opción [0-4]: ').strip())
+        
         except ValueError:
             print(solo_numeros_enteros)
             continue
 
         if opcion == 1:
-            pass
+            solicitar_datos_proveedor()
+        elif opcion == 2:
+            actualizar_datos_proveedor()
+        elif opcion == 3:
+            mostrar_proveedores()
+            solicitar_desactivar_proveedor()
+        elif opcion == 4:
+            mostrar_proveedores()    
+        elif opcion != 0:
+            print(opcion_invalida)
+            
+            
+            
+def menu_almacen():
+   
+    opcion = -1
+
+    while opcion != 0:
+        
+        for clave, valor in submenu_almacen.items():
+            print(f'[{clave}] - {valor}')
+
+        try:
+            opcion = int(input('\nIngrese su opción [0-4]: ').strip())
+        
+        except ValueError:
+            print(solo_numeros_enteros)
+            continue
+
+        if opcion == 1:
+            solicitar_datos_proveedor()
+        elif opcion == 2:
+            actualizar_datos_proveedor()
+        elif opcion == 3:
+            mostrar_proveedores()
+            solicitar_desactivar_proveedor()
+        elif opcion == 4:
+            mostrar_proveedores()    
         elif opcion != 0:
             print(opcion_invalida)

@@ -142,4 +142,4 @@ def solicitar_desactivar_producto():
     elif confirmar == "n":
             print(opcion_cancelada)
     else:
-            print(opcion_invalida) 
+            print(opcion_invalida)
