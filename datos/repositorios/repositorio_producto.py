@@ -1,10 +1,13 @@
 from datos.modelos.producto import Producto
+from datos.modelos.categoria import Categoria
 from peewee import IntegrityError,OperationalError,DataError,PeeweeException
 from auxiliares.mensajes import operacion_exitosa
 
 #GET
 def listado_productos():
-    productos = Producto.select()
+    productos = (Producto
+                 .select(Producto,Categoria)
+                 .join(Categoria))
     if productos:
         return productos
     

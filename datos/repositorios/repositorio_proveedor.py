@@ -11,9 +11,7 @@ from auxiliares.mensajes import (excepcion_data_error,
 
 #Metodo GET
 def listado_proveedor():
-    
     proveedor = Proveedor.select()
-    
     if proveedor:
         return proveedor
     
@@ -46,7 +44,6 @@ def obtener_proveedor_por_id(id_proveedor):
 
 #DELETE
 def borrado_logico_proveedor(proveedor:Proveedor):
-    
     try:
         proveedor.estado = False
         proveedor.save()
@@ -59,8 +56,7 @@ def borrado_logico_proveedor(proveedor:Proveedor):
     except DataError as e:
             excepcion_data_error(e)
     except PeeweeException as e:
-            excepcion_peewee(e)
-            
+        excepcion_peewee(e)
     return False
 
 

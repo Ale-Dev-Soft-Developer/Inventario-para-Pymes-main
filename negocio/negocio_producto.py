@@ -1,5 +1,6 @@
 from datos.repositorios.repositorio_producto import listado_productos as obtener_listado_productos,guardar_producto,actualizar_producto,borrado_logico_producto
 from datos.modelos.producto import Producto
+from datos.modelos.categoria import Categoria
 from prettytable import PrettyTable
 from auxiliares.mensajes import no_existe
 
@@ -18,7 +19,7 @@ def listado_productos():
                 producto.id_producto,
                 producto.nombre,
                 producto.descripcion,
-                producto.id_categoria,
+                producto.id_categoria.nombre,
                 producto.sku,
                 producto.precio_costo,
                 producto.precio_venta,
