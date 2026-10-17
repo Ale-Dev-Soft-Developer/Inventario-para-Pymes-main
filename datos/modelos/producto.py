@@ -1,11 +1,11 @@
-from peewee import CharField,AutoField,BooleanField,SQL,ForeignKeyField,Model,IntegerField,DateField
+from peewee import CharField,AutoField,BooleanField,SQL,ForeignKeyField,IntegerField,DateField
 from auxiliares.mensajes import valor_por_defecto
 from datos.modelos.models import BaseModel
 from datos.modelos.categoria import Categoria as Categorias
 
 
 class Producto(BaseModel):
-    descripcion = CharField()
+    descripcion = CharField(max_length=255)
     estado = BooleanField(constraints=[SQL(valor_por_defecto)])
     fecha_elaboracion = DateField(null=True)
     fecha_vencimiento = DateField(null=True)

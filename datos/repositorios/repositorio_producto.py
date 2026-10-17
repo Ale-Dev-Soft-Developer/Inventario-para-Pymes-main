@@ -16,8 +16,8 @@ def listado_productos():
 #POST
 def guardar_producto(producto:Producto):
     try:
-        guardar = producto.save()
-        print(guardar)
+        
+        producto.save()
         return True
     
     except IntegrityError as e:

@@ -7,7 +7,9 @@ from datos.repositorios.repositorio_proveedor import( listado_proveedor as obten
 
 from negocio.negocio_direccion import (crear_direccion,
                                        actualizar_direccion)
+
 from datos.repositorios.repositorio_direccion import guardar_direcciones
+
 from datos.repositorios.repositorio_proveedor import (obtener_proveedor_por_id,
                                                       guardar_proveedor)
 from datos.modelos.proveedor import Proveedor
@@ -86,10 +88,7 @@ def crear_proveedor(nombre,rut,telefono,correo,calle,comuna,ciudad,numero):
 
 #GET_BY_ID
 def obtener_proveedor(id_proveedor):
-    try:
-        return Proveedor[id_proveedor]
-    except Proveedor.DoesNotExist:
-        return None
+        return obtener_proveedor_por_id[id_proveedor]
     
 #UPDATE_FOR ID
 def actualizar_proveedor_existente(id_proveedor,nombre,telefono,correo):

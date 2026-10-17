@@ -37,7 +37,9 @@ def guardar_proveedor(proveedor:Proveedor):
 
 
 def obtener_proveedor_por_id(id_proveedor):
-    return Proveedor.get_or_none(Proveedor.id_proveedor == id_proveedor)
+    return Proveedor.get_or_none(
+        (Proveedor.id_proveedor == id_proveedor)&
+        (Proveedor.estado == True))
 
 
 

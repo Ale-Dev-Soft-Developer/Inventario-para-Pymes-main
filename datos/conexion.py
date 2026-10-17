@@ -8,6 +8,7 @@ def conectar_db():
                                    'host': config('host'),
                                    'port': config('port', cast=int),
                                    'user': config('user'),
-                                    'password': config('password')
+                                    'password': config('password'),
+                                    'sql_mode': 'STRICT_TRANS_TABLES'
                                 })
     return base_datos

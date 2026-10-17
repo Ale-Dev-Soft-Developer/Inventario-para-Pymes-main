@@ -1,4 +1,4 @@
-from peewee import CharField,AutoField,ForeignKeyField,Model,BooleanField,SQL
+from peewee import CharField,AutoField,ForeignKeyField,BooleanField,SQL
 from datos.modelos import BaseModel
 from auxiliares.mensajes import valor_por_defecto
 from datos.modelos.direccion import Direccion as Direcciones

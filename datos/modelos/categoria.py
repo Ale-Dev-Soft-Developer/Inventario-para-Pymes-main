@@ -1,11 +1,6 @@
-from peewee import CharField,AutoField,Model,SQL,Model,BooleanField
-from datos.conexion import conectar_db
+from peewee import CharField,AutoField,BooleanField
+from datos.modelos import BaseModel
 
-database = conectar_db()
-
-class BaseModel(Model):
-    class Meta:
-        database = database
 
 class Categoria(BaseModel):
     id_categoria = AutoField()
