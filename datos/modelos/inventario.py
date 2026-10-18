@@ -12,8 +12,8 @@ from datos.modelos.stock import Stock as Stocks
 
 
 class Inventario(BaseModel):
-    id_almacen = ForeignKeyField(column_name='id_almacen', field='id_almacen', model=Almacenes)
     id_inventario = AutoField()
+    id_almacen = ForeignKeyField(column_name='id_almacen', field='id_almacen', model=Almacenes)
     id_producto = ForeignKeyField(column_name='id_producto', field='id_producto', model=Productos)
     id_stock = ForeignKeyField(column_name='id_stock', field='id_stock', model=Stocks, unique=True)
     

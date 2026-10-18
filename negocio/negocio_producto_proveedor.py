@@ -58,5 +58,5 @@ def eliminar_relacion(id_producto, id_proveedor):
 
     if relacion is None:
         return False
-
+    
     return borrado_fisico_relacion(relacion)
