@@ -33,6 +33,19 @@ def listado_inventario_producto(id_producto):
     return inventario_general().where(Inventario.id_producto == id_producto)
 
 
+def listado_stock_critico():
+    return (Inventario
+            .select()
+            .where(Inventario.stock_actual <= Inventario.stock_minimo))
+
+
+#utilizar para validar relacion en negocio_inventario.
+def obtener_inventario_por_id(id_inventario,id_producto):
+    
+    return Inventario.get_or_none(
+        (Inventario.id_inventario == id_inventario)&
+        (Inventario.id_producto == id_producto)
+    )
 
 def guardar_inventario(inventario:Inventario):
     
@@ -50,19 +63,3 @@ def guardar_inventario(inventario:Inventario):
         print(excepcion_peewee(e))
     
     return False
-
-
-def obtener_inventario_por_id(id_inventario):
-    
-    return Inventario.get_or_none(
-        (Inventario.id_inventario == id_inventario)
-    )
-    
-
-#Busqueda traida de rama Axwel 
-def obtener_producto_inventario_de_almacen(id_producto,id_almacen):
-    
-    return Inventario.get_or_none(
-        (Inventario.id_producto == id_producto) &
-        (Inventario.id_almacen == id_almacen)
-    )
