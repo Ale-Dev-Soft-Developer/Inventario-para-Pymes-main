@@ -3,7 +3,7 @@ from datos.repositorios.repositorio_inventario import (guardar_inventario,
                                                        listado_inventario_general,
                                                        listado_inventario_producto,
                                                        listado_stock_critico,
-                                                       obtener_inventario_por_id
+                                                       obtener_inventario_y_producto
                                                        )
 
 from negocio.negocio_producto import obtener_producto
@@ -22,7 +22,7 @@ def asociar_producto_con_almacen(id_producto,id_almacen,stock_actual,stock_minim
     if stock_actual < 0 or stock_minimo < 0:
         return False
     
-    if obtener_inventario_por_id(id_producto,id_almacen) is not None:
+    if obtener_inventario_y_producto(id_producto,id_almacen) is not None:
         return False
     
     

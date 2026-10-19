@@ -1,6 +1,9 @@
 from datos.modelos.categoria import Categoria
 from peewee import IntegrityError, OperationalError, DataError, PeeweeException
-from auxiliares.mensajes import operacion_exitosa
+from auxiliares.mensajes import (excepcion_peewee,
+                                 excepcion_data_error,
+                                 excepcion_operational_error,
+                                 excepcion_intregity)
 
 #GET 
 def listado_categorias():
@@ -12,6 +15,10 @@ def listado_categorias():
     return False
     
 
+def obtener_categoria_por_id(id_categoria):
+    return Categoria.get_or_none(Categoria.id_categoria == id_categoria) 
+
+
 #POST_AND_UPDATE
 def guardar_categoria(categoria:Categoria):
     try: 
@@ -20,48 +27,12 @@ def guardar_categoria(categoria:Categoria):
         return True
         
     except IntegrityError as e:
-        print(f"Error al guardar la categoría: {e}")
+        print(excepcion_intregity(e))
     except OperationalError as e:
-        print(f"Error de operación: {e}")
+        print(excepcion_operational_error(e))
     except DataError as e:
-        print(f"Error de base de datos: {e}")
+        print(excepcion_data_error(e))
     except PeeweeException as e:
-        print(f"Error de Peewee: {e}")
+        print(excepcion_peewee(e))
     
-    return False
-
-#PUT o CATCH        
-def actualizar_categoria(categoria:Categoria):
-    try:
-        categoria.save()
-        print(operacion_exitosa)
-        return True
-    
-    except IntegrityError as e:
-        print(f"Error al actualizar la categoría: {e}")
-    except OperationalError as e:
-        print(f"Error de operación: {e}")
-    except DataError as e:
-        print(f"Error de base de datos: {e}")
-    except PeeweeException as e:
-        print(f"Error de Peewee: {e}")
-    
-    return False
-        
-#DELETE
-def borrado_logico_categoria(categoria:Categoria):
-    try:
-            categoria.estado = False
-            categoria.save()
-            return True
-        
-    except IntegrityError as e:
-            print(f"Error al actualizar la categoría: {e}")
-    except OperationalError as e:
-            print(f"Error de operación: {e}")
-    except DataError as e:
-            print(f"Error de base de datos: {e}")
-    except PeeweeException as e:
-            print(f"Error de Peewee: {e}")
-        
     return False

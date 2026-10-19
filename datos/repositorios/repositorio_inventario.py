@@ -40,11 +40,16 @@ def listado_stock_critico():
 
 
 #utilizar para validar relacion en negocio_inventario.
-def obtener_inventario_por_id(id_inventario,id_producto):
+def obtener_inventario_y_producto(id_inventario,id_producto):
     
     return Inventario.get_or_none(
         (Inventario.id_inventario == id_inventario)&
         (Inventario.id_producto == id_producto)
+    )
+
+def obtener_inventario(id_inventario):
+    return Inventario.get_or_none(
+        (Inventario.id_inventario == id_inventario)
     )
 
 def guardar_inventario(inventario:Inventario):

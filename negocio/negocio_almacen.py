@@ -1,8 +1,8 @@
 
 from datos.repositorios.repositorio_almacen import (listado_almacen as obtener_listado_almacen,
                                                     guardar_almacen,
-                                                    obtener_almacen_por_id,
-                                                    borrado_logico_almacen)
+                                                    obtener_almacen_por_id
+                                                    )
 from datos.modelos.almacen import Almacen
 from negocio.negocio_direccion import (crear_direccion,guardar_direcciones,actualizar_direccion)
 from prettytable import PrettyTable

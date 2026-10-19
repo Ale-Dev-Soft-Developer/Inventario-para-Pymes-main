@@ -1,18 +1,29 @@
 from datos.modelos.direccion import Direccion
-from peewee import IntegrityError, OperationalError, DataError, PeeweeException
+from peewee import (IntegrityError,
+                    OperationalError,
+                    DataError,
+                    PeeweeException)
+
+from auxiliares.mensajes import (excepcion_peewee,
+                                 excepcion_data_error,
+                                 excepcion_operational_error,
+                                 excepcion_intregity)
 
 def guardar_direcciones(direccion: Direccion):
+    
     try:
-        return direccion.save()
+        
+        direccion.save()
+        return True
     
     except IntegrityError as e:
-        print(f"Integridad de la base de datos: {e}")
+        print(excepcion_intregity(e))
     except OperationalError as e:
-        print(f"Error operativo: {e}")
+        print(excepcion_operational_error(e))
     except DataError as e:
-        print(f"Error de validación de datos: {e}")
+        print(excepcion_data_error(e))
     except PeeweeException as e:
-        print(f"Error general de Peewee: {e}")
+        print(excepcion_peewee(e))
         
     return False
         
