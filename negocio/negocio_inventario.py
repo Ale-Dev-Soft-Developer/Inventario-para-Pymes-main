@@ -9,6 +9,9 @@ from datos.repositorios.repositorio_inventario import (guardar_inventario,
 from negocio.negocio_producto import obtener_producto
 from negocio.negocio_almacen import obtener_almacen
 from datos.repositorios.repositorio_inventario import Inventario
+from peewee import PeeweeException
+from auxiliares.mensajes import excepcion_peewee
+from datos.modelos.models import database
 
 
 def asociar_producto_con_almacen(id_producto,id_almacen,stock_actual,stock_minimo):
@@ -25,14 +28,21 @@ def asociar_producto_con_almacen(id_producto,id_almacen,stock_actual,stock_minim
     if obtener_inventario_y_producto(id_producto,id_almacen) is not None:
         return False
     
+    try: 
+        
+        with database.atomic():
     
-    asociar = Inventario()
-    asociar.id_almacen = id_almacen
-    asociar.id_producto = id_producto
-    asociar.stock_minimo = stock_minimo
-    asociar.stock_actual = stock_actual
     
-    return guardar_inventario(asociar)
+            asociar = Inventario()
+            asociar.id_almacen = id_almacen
+            asociar.id_producto = id_producto
+            asociar.stock_minimo = stock_minimo
+            asociar.stock_actual = stock_actual
+    
+            return guardar_inventario(asociar)
+        
+    except PeeweeException as e:
+        print(excepcion_peewee(e))
 
 
 def obtener_listado_inventario_general():

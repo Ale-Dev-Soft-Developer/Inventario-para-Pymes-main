@@ -6,6 +6,9 @@ from datos.repositorios.repositorio_almacen import (listado_almacen as obtener_l
 from datos.modelos.almacen import Almacen
 from negocio.negocio_direccion import (crear_direccion,guardar_direcciones,actualizar_direccion)
 from prettytable import PrettyTable
+from datos.modelos.models import database
+from peewee import PeeweeException
+from auxiliares.mensajes import excepcion_peewee
 
 #METODO GET
 def listado_almacen():
@@ -34,17 +37,27 @@ def listado_almacen():
 #POST
 def crear_almacen(nombre,encargado,calle,ciudad,comuna,numero):
 
-    nuevo_almacen = Almacen()
-    nuevo_almacen.nombre = nombre
-    nuevo_almacen.encargado = encargado
-    
-    nueva_direccion = crear_direccion(calle,ciudad,comuna,numero)
-    
-    if not guardar_direcciones(nueva_direccion):
+    if nombre == '' or encargado == '' or calle == '' or numero == '':
         return False
     
-    nueva_direccion.id_direccion = nueva_direccion
-    return guardar_almacen(nuevo_almacen)
+    try:
+        
+        with database.atomic():
+        
+            nuevo_almacen = Almacen()
+            nuevo_almacen.nombre = nombre
+            nuevo_almacen.encargado = encargado
+    
+            nueva_direccion = crear_direccion(calle,ciudad,comuna,numero)
+    
+            if not guardar_direcciones(nueva_direccion):
+                return False
+    
+            nueva_direccion.id_direccion = nueva_direccion
+            return guardar_almacen(nuevo_almacen)
+
+    except PeeweeException as e:
+        print(excepcion_peewee(e))
 
 
 #GET_BY_ID
@@ -57,15 +70,23 @@ def obtener_almacen(id_almacen):
     
 
 #UPDATE_ALMACEN
-def actualizar_almacen(id_almacen, nombre, encagado):
+def actualizar_almacen(id_almacen, nombre, encargado):
     almacen = obtener_almacen_por_id(id_almacen)
 
     if almacen is None:
         return False
-
-    almacen.nombre = nombre
-    almacen.encargado = encagado
-    return guardar_almacen(almacen)
+    
+    if nombre == '' or encargado == '':
+        return False
+ 
+    try:
+        with database.atomic():
+            almacen.nombre = nombre
+            almacen.encargado = encargado
+            return guardar_almacen(almacen)
+        
+    except PeeweeException as e:
+        print(excepcion_peewee(e))
 
 
     

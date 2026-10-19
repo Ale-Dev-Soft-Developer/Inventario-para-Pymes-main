@@ -24,6 +24,7 @@ def proveedor_principal(id_producto):
 
 def asignar_proveedor_principal(id_producto, id_proveedor):
     
+    
     producto = obtener_producto(id_producto)
     proveedor = obtener_proveedor(id_proveedor)
 
