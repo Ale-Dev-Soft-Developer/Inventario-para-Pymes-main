@@ -1,6 +1,7 @@
 from datos.repositorios.repositorio_categoria import (listado_categorias as obtener_listado_categoria,
                                                       guardar_categoria,
-                                                      obtener_categoria_por_id)
+                                                      obtener_categoria_por_id,
+                                                      listar_categoria_desactivada)
 from datos.modelos.categoria import Categoria
 from datos.modelos.models import database
 from auxiliares.mensajes import excepcion_peewee
@@ -10,6 +11,10 @@ from peewee import PeeweeException
 #GET
 def listado_categoria():
     return obtener_listado_categoria()
+
+
+def listar_categorias_desactivadas():
+    return listar_categoria_desactivada()
 
 
 #GET_FOR_ID

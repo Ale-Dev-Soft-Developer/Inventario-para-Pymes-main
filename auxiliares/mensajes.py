@@ -4,6 +4,7 @@ valor_por_defecto = 'DEFAULT 1'
 ingrese_id_categoria = 'Ingrese el ID de la categoria: '
 ingrese_nombre_categoria = 'Ingrese el nombre de la categoria: '
 ingrese_descripcion_categoria = 'Ingrese la descripcion de la categoria: '
+no_existe_categoria = 'No hay Categorias activas registradas.'
 
 
 def ingresaras_lo_siguiente(nombre,descripcion):
@@ -36,6 +37,19 @@ estas_seguro = '¿Estas seguro? S/N: '
 operacion_exitosa = 'Operacion Exitosa'
 ingrese_ID_buscar = "Ingrese el ID que desea buscar: "
 no_se_concreto_la_operacion = 'No se concreto la operacion.'
+
+# Mensajes traidos desde rama Axwel
+VOLVER_AL_MENU = "Volver al menú principal"
+
+MENSAJE_ID_ENTERO = "Debes ingresar un numero entero."
+MENSAJE_ID_NO_EXISTE = "No hay registros con ese ID."
+OPCION_INVALIDA = "Opcion invalida."
+SOLICITUD_ID_CATEGORIA = "Ingrese el ID de la categoria: "
+SOLICITUD_ID_PROVEEDOR = "Ingrese el ID del proveedor: "
+SOLICITUD_ID_ALMACEN = "Ingrese el ID del almacen: "
+SOLICITUD_ID_PRODUCTO = "Ingrese el ID del producto: "
+NO_HAY_MOVIMIENTOS = "No hay movimientos registrados."
+SELECCIONE_PROVEEDOR = "\nSeleccione el proveedor: "
 
 # Producto
 ingrese_id_producto = 'Ingrese el ID del producto: '
