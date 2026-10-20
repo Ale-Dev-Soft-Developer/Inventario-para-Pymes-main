@@ -8,8 +8,7 @@ from datos.repositorios.repositorio_producto_proveedor import (crear_relacion_pr
 
 from negocio.negocio_producto import obtener_producto
 from negocio.negocio_proveedor import obtener_proveedor
-from datos.repositorios.repositorio_producto_proveedor import ProductoProveedor
-from datos.modelos.proveedor import Proveedor
+
 
 
 def listado_proveedores_asociados():

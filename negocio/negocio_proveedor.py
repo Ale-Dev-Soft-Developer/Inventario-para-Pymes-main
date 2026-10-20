@@ -13,6 +13,9 @@ from datos.repositorios.repositorio_direccion import guardar_direcciones
 from datos.repositorios.repositorio_proveedor import (obtener_proveedor_por_id,
                                                       guardar_proveedor)
 from datos.modelos.proveedor import Proveedor
+from peewee import PeeweeException
+from auxiliares.mensajes import excepcion_peewee
+from datos.modelos.models import database
 
 #GET
 def listado_proveedor():
@@ -70,20 +73,28 @@ def crear_proveedor(nombre,rut,telefono,correo,calle,comuna,ciudad,numero):
     if existe_correo(correo):
         return False
     
-    
-    nuevo_proveedor = Proveedor()
-    nuevo_proveedor.nombre = nombre
-    nuevo_proveedor.rut = rut
-    nuevo_proveedor.telefono = telefono
-    nuevo_proveedor.correo = correo
-    
-    nueva_direccion = crear_direccion(calle,ciudad,comuna,numero)
-    
-    if not guardar_direcciones(nueva_direccion):
+    if nombre == '' or correo == '' or telefono == '' or rut == '':
         return False
     
-    nuevo_proveedor.id_direccion = nueva_direccion
-    return guardar_proveedor(nuevo_proveedor)
+    try:
+        
+        with database.atomic():
+            nuevo_proveedor = Proveedor()
+            nuevo_proveedor.nombre = nombre
+            nuevo_proveedor.rut = rut
+            nuevo_proveedor.telefono = telefono
+            nuevo_proveedor.correo = correo
+    
+            nueva_direccion = crear_direccion(calle,ciudad,comuna,numero)
+    
+            if not guardar_direcciones(nueva_direccion):
+                return False
+    
+            nuevo_proveedor.id_direccion = nueva_direccion
+            return guardar_proveedor(nuevo_proveedor)
+        
+    except PeeweeException as e:
+        print(excepcion_peewee(e))
 
 
 #GET_BY_ID
@@ -104,11 +115,23 @@ def actualizar_proveedor_existente(id_proveedor,nombre,telefono,correo):
     if existe_telefono(telefono):
         return False
     
-    proveedor.nombre = nombre
-    proveedor.telefono = telefono
-    proveedor.correo = correo
+    if nombre == '' or telefono == '' or correo == '':
+        return False
     
-    guardar_proveedor(proveedor)
+
+    try: 
+        
+        with database.atomic():
+            
+            proveedor.nombre = nombre
+            proveedor.telefono = telefono
+            proveedor.correo = correo
+    
+            guardar_proveedor(proveedor)
+            
+    except PeeweeException as e:
+        print(excepcion_peewee(e))
+            
 
 #UPDATE_ONLY_DIRECCION
 #Idea traida desde la rama de Axwel
