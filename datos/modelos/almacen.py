@@ -1,16 +1,26 @@
-from peewee import CharField,AutoField,ForeignKeyField,BooleanField,SQL
-from datos.modelos import BaseModel
-from auxiliares.mensajes import valor_por_defecto
-from datos.modelos.direccion import Direccion as Direcciones
+from peewee import CharField, BooleanField, AutoField, ForeignKeyField, SQL, DeferredForeignKey
+from auxiliares.mensajes import defecto
+from datos.modelos.direccion import Direccion
+from datos.modelos.models import BaseModel
 
-
+from datos.modelos.usuario import Usuario
 
 class Almacen(BaseModel):
-    encargado = CharField(max_length=50)
-    estado = BooleanField(constraints=[SQL(valor_por_defecto)])
     id_almacen = AutoField()
-    id_direccion = ForeignKeyField(column_name='id_direccion', field='id_direccion', model=Direcciones)
     nombre = CharField(max_length=50)
+    estado = BooleanField(constraints=[SQL(defecto)])
+    id_direccion = ForeignKeyField(
+        Direccion,
+        field=Direccion.id_direccion,
+        column_name="id_direccion"
+    )
+
+    # Se usa "DeferredForeignKey" por la dependencia circular entre las tablas
+    id_encargado = DeferredForeignKey(
+        Usuario,
+        field=Usuario.id_usuario,
+        column_name="id_encargado"
+    )
 
     class Meta:
-        table_name = 'almacenes'
+        table_name = 'almacenes'    

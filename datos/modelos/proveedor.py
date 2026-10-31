@@ -1,16 +1,20 @@
-from peewee import CharField,AutoField,BooleanField,ForeignKeyField,SQL
-from auxiliares.mensajes import valor_por_defecto
-from datos.modelos.direccion import Direccion as Direcciones
-from datos.modelos import BaseModel
+from peewee import AutoField, BooleanField, SQL, CharField, ForeignKeyField
+from datos.modelos.direccion import Direccion
+from auxiliares.mensajes import defecto
+from datos.modelos.models import BaseModel
 
-class Proveedor (BaseModel):
-    correo = CharField(max_length=100, null=True,unique=True)
-    estado = BooleanField(constraints=[SQL(valor_por_defecto)])
-    id_direccion = ForeignKeyField(column_name='id_direccion', field='id_direccion', model=Direcciones)
+class Proveedor(BaseModel):
     id_proveedor = AutoField()
-    nombre = CharField(max_length=50)
     rut = CharField(max_length=12, unique=True)
+    nombre = CharField(max_length=50)
+    correo = CharField(max_length=100, null=True, unique=True)
     telefono = CharField(max_length=9, unique=True)
-    
+    estado = BooleanField(constraints=[SQL(defecto)])
+    id_direccion = ForeignKeyField(
+        Direccion,
+        field=Direccion.id_direccion,
+        column_name="id_direccion"
+    )
+
     class Meta:
-        table_name = 'proveedores'
+        table_name = 'proveedores'       
