@@ -1,5 +1,4 @@
 from datos.modelos.producto import Producto
-
 from datos.modelos.categoria import Categoria
 
 from peewee import (IntegrityError,
