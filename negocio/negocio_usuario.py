@@ -53,17 +53,17 @@ def registrar_usuario(nombre, usuario, contrasena, id_rol, id_almacen):
         return False
 
 
-def actualizar_usuario(usuario:Usuario,nombre,contrasena):
+def actualizar_usuario(usuario:Usuario,nombre,nuevo_nombre_usuario,contrasena):
         
     if verificar_nombre_usuario(usuario) is True:
         
         try:
             with database.atomic():
                
-                actualizar_usuario.nombre = nombre
-                actualizar_usuario.usuario = usuario
-                actualizar_usuario.contrasena = contrasena
-                return guardar_usuario(actualizar_usuario)
+                usuario.nombre = nombre
+                usuario.usuario = nuevo_nombre_usuario
+                usuario.contrasena = contrasena
+                return guardar_usuario(usuario)
         
         except PeeweeException:
             return False
