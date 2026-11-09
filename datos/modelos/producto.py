@@ -1,20 +1,24 @@
-from peewee import CharField,AutoField,BooleanField,SQL,ForeignKeyField,IntegerField,DateField
-from auxiliares.mensajes import valor_por_defecto
+from peewee import CharField, BooleanField, SQL, DateField, DecimalField, AutoField, ForeignKeyField
+from auxiliares.mensajes import defecto
+from datos.modelos.categoria import Categoria
 from datos.modelos.models import BaseModel
-from datos.modelos.categoria import Categoria as Categorias
-
 
 class Producto(BaseModel):
-    descripcion = CharField(max_length=255)
-    estado = BooleanField(constraints=[SQL(valor_por_defecto)])
-    fecha_elaboracion = DateField(null=True)
-    fecha_vencimiento = DateField(null=True)
-    id_categoria = ForeignKeyField(column_name='id_categoria', field='id_categoria', model=Categorias)
     id_producto = AutoField()
     nombre = CharField(max_length=50)
-    precio_costo = IntegerField()
-    precio_venta = IntegerField()
     sku = CharField(max_length=100, unique=True)
+    precio_costo = DecimalField()
+    precio_venta = DecimalField()
+    descripcion = CharField()
+    fecha_elaboracion = DateField(null=True)
+    fecha_vencimiento = DateField(null=True)
+    estado = BooleanField(constraints=[SQL(defecto)])
+
+    id_categoria = ForeignKeyField(
+        Categoria,
+        field=Categoria.id_categoria,
+        column_name="id_categoria"
+    )
 
     class Meta:
-        table_name = 'productos'
+        table_name = 'productos'        

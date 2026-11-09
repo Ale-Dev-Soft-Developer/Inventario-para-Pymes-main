@@ -1,13 +1,12 @@
-from peewee import CharField,AutoField,IntegerField,ForeignKeyField,BooleanField,CompositeKey,SQL
-from auxiliares.mensajes import valor_por_defecto
-from datos.modelos.producto import Producto as Productos
-from datos.modelos.proveedor import Proveedor as Proveedores
-from datos.modelos import BaseModel
+from peewee import BooleanField, SQL, ForeignKeyField, CompositeKey
+from datos.modelos.producto import Producto
+from datos.modelos.proveedor import Proveedor
+from datos.modelos.models import BaseModel
 
 class ProductoProveedor(BaseModel):
-    es_principal = BooleanField(constraints=[SQL(valor_por_defecto)])
-    id_producto = ForeignKeyField(column_name='id_producto', field='id_producto', model=Productos)
-    id_proveedor = ForeignKeyField(column_name='id_proveedor', field='id_proveedor', model=Proveedores)
+    id_producto = ForeignKeyField(Producto, field=Producto.id_producto, column_name="id_producto")
+    id_proveedor = ForeignKeyField(Proveedor, field=Proveedor.id_proveedor, column_name="id_proveedor")
+    es_principal = BooleanField(constraints=[SQL("DEFAULT 0")])
 
     class Meta:
         table_name = 'producto_proveedor'

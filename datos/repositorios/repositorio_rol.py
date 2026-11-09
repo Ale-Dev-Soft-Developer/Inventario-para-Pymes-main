@@ -1,13 +1,5 @@
 from datos.modelos.rol import Rol
 from datos.modelos.usuario import Usuario
-from peewee import (IntegrityError,
-                    OperationalError,
-                    DataError,
-                    PeeweeException)
-from auxiliares.mensajes import (excepcion_data_error,
-                                excepcion_intregity,
-                                excepcion_operational_error,
-                                excepcion_peewee)
 
 
 def listado_roles():
