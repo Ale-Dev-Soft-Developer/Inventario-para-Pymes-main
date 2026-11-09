@@ -28,6 +28,15 @@ def obtener_usuario_por_nombre(nombre_usuario):
     return Usuario.get_or_none(Usuario.usuario == nombre_usuario)
 
 
+def verificar_nombre_usuario(nombre_usuario):
+    nombre_usuario = (Usuario
+                   .select(Usuario)
+                   .where(Usuario.usuario == nombre_usuario))
+    
+    if nombre_usuario:
+        return False
+    
+
 def guardar_usuario(usuario:Usuario):
     
     try:

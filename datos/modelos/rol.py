@@ -1,4 +1,4 @@
-from peewee import CharField, AutoField
+from peewee import CharField, AutoField,BooleanField
 
 from datos.modelos.models import BaseModel
 
