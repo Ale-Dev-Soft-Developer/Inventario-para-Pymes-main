@@ -103,24 +103,35 @@ def forzar_fecha(mensaje, obligatorio=False):
             print("Ingrese una fecha válida con el formato DD-MM-YYYY.")   
     return fecha 
 
+#sugerencia de Claudito
+def convertir_decimal_positivo(texto, decimales):
+    try:
+        numero = Decimal(texto.replace(",", "."))
+    except InvalidOperation:
+        print(MENSAJE_NUMERO_DECIMAL)
+        return None
+
+    if not numero.is_finite() or numero <= 0:
+        print(MENSAJE_NUMERO_POSITIVO)
+        return None
+    if -numero.normalize().as_tuple().exponent > decimales:
+        print(MENSAJE_MAXIMO_DECIMALES.format(decimales))
+        return None
+    return numero
+
 
 def forzar_decimal_positivo(mensaje, decimales):
-    valido = False
     numero = None
+    while numero is None:
+        numero = convertir_decimal_positivo(input(mensaje).strip(), decimales)
+    return numero
 
-    while not valido:
-        try:
-            entrada_texto = input(mensaje).strip().replace(",", ".")
-            numero = Decimal(entrada_texto)
 
-            if not numero.is_finite() or numero <= 0:
-                print(MENSAJE_NUMERO_POSITIVO)
-            elif -numero.normalize().as_tuple().exponent > decimales:
-                print(MENSAJE_MAXIMO_DECIMALES.format(decimales))
-            else:
-                valido = True
-
-        except InvalidOperation:
-            print(MENSAJE_NUMERO_DECIMAL)
-
+def actualizar_decimal_positivo(mensaje, valor_actual, decimales):
+    numero = None
+    while numero is None:
+        texto = input(f"{mensaje} (ENTER para mantener): ").strip()
+        if texto == "":
+            return valor_actual
+        numero = convertir_decimal_positivo(texto, decimales)
     return numero
