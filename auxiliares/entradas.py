@@ -8,7 +8,8 @@ from auxiliares.mensajes import (
     fecha_invalida,
     pregunta_modificar,
     MENSAJE_NUMERO_DECIMAL,
-    MENSAJE_NUMERO_POSITIVO
+    MENSAJE_NUMERO_POSITIVO,
+    MENSAJE_MAXIMO_DECIMALES
 )
 
 
@@ -103,7 +104,7 @@ def forzar_fecha(mensaje, obligatorio=False):
     return fecha 
 
 
-def forzar_decimal_positivo(mensaje):
+def forzar_decimal_positivo(mensaje, decimales):
     valido = False
     numero = None
 
@@ -114,6 +115,8 @@ def forzar_decimal_positivo(mensaje):
 
             if not numero.is_finite() or numero <= 0:
                 print(MENSAJE_NUMERO_POSITIVO)
+            elif -numero.normalize().as_tuple().exponent > decimales:
+                print(MENSAJE_MAXIMO_DECIMALES.format(decimales))
             else:
                 valido = True
 
