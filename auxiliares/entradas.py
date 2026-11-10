@@ -1,4 +1,5 @@
 from datetime import datetime
+from decimal import Decimal,InvalidOperation
 
 from auxiliares.mensajes import (
     opcion_invalida,
@@ -6,6 +7,8 @@ from auxiliares.mensajes import (
     campo_obligatorio,
     fecha_invalida,
     pregunta_modificar,
+    MENSAJE_NUMERO_DECIMAL,
+    MENSAJE_NUMERO_POSITIVO
 )
 
 
@@ -98,3 +101,23 @@ def forzar_fecha(mensaje, obligatorio=False):
         except ValueError:
             print("Ingrese una fecha válida con el formato DD-MM-YYYY.")   
     return fecha 
+
+
+def forzar_decimal_positivo(mensaje):
+    valido = False
+    numero = None
+
+    while not valido:
+        try:
+            entrada_texto = input(mensaje).strip().replace(",", ".")
+            numero = Decimal(entrada_texto)
+
+            if not numero.is_finite() or numero <= 0:
+                print(MENSAJE_NUMERO_POSITIVO)
+            else:
+                valido = True
+
+        except InvalidOperation:
+            print(MENSAJE_NUMERO_DECIMAL)
+
+    return numero

@@ -1,12 +1,10 @@
 from peewee import PeeweeException
 from datos.modelos.models import database
-
 from datos.modelos.usuario import Usuario
 from datos.repositorios.repositorio_usuario import (
     guardar_usuario,
     listar_usuarios,
-    obtener_usuario_por_nombre,
-    verificar_nombre_usuario
+    obtener_usuario_por_nombre
 )
 
 # ------------ Autenticacion ------------
@@ -36,37 +34,47 @@ def listar_usuarios_activos():
 # ------------ Escritura ------------
 
 def registrar_usuario(nombre, usuario, contrasena, id_rol, id_almacen):
+    nuevo_usuario = Usuario()
+    nuevo_usuario.nombre = nombre
+    nuevo_usuario.usuario = usuario
+    nuevo_usuario.contrasena = contrasena
+    nuevo_usuario.id_rol = id_rol
+    nuevo_usuario.id_almacen = id_almacen
 
     try:
-        #Se le agrego atomicidad
-        with database.atomic():
-            nuevo_usuario = Usuario()
-            nuevo_usuario.nombre = nombre
-            nuevo_usuario.usuario = usuario
-            nuevo_usuario.contrasena = contrasena
-            nuevo_usuario.id_rol = id_rol
-            nuevo_usuario.id_almacen = id_almacen
+        return guardar_usuario(nuevo_usuario)
+    except PeeweeException:
+        return False
 
-            return guardar_usuario(nuevo_usuario)
+def actualizar_usuario(usuario:Usuario, nombre, username):
+    if usuario is None:
+        return False
+
+    # Metodo que busca si el username existe para no replicarlo
+    if existe_usuario(username, usuario.id_usuario):
+        return False
+    
+    usuario.nombre = nombre
+    usuario.usuario = username
+    try:
+        return guardar_usuario(usuario)
         
     except PeeweeException:
         return False
 
+# Segun el diagrama de clases cambiar la contrasena es un metodo aparte
+def actualizar_contrasena(usuario:Usuario, nueva_contrasena):
+    if usuario is None:
+        return False
 
-def actualizar_usuario(usuario:Usuario,nombre,nuevo_nombre_usuario,contrasena):
+    # FALTA METODO PARA VALIDAR Y HASHEAR CONTRASENA
+    usuario.contrasena = nueva_contrasena
+    try:
+        return guardar_usuario(usuario)
         
-    if verificar_nombre_usuario(usuario) is True:
-        
-        try:
-            with database.atomic():
-               
-                usuario.nombre = nombre
-                usuario.usuario = nuevo_nombre_usuario
-                usuario.contrasena = contrasena
-                return guardar_usuario(usuario)
-        
-        except PeeweeException:
-            return False
+    except PeeweeException:
+        return False
+
 
 def desactivar_usuario(usuario: Usuario):
     if usuario is None:
@@ -89,7 +97,6 @@ def activar_usuario(usuario: Usuario):
         return guardar_usuario(usuario)
     except PeeweeException:
         return False        
-
 
 def cambiar_contrasena(usuario: Usuario, nueva_contrasena):
     if usuario is None:

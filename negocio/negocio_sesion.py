@@ -26,3 +26,4 @@ class Sesion:
     # Para comprobar si el usuario(Trabajdor) tiene autorizacion para acceder a su almacen
     def puede_acceder_almacen(self):
         pass
+        

@@ -50,6 +50,8 @@ SOLICITUD_ID_ALMACEN = "Ingrese el ID del almacen: "
 SOLICITUD_ID_PRODUCTO = "Ingrese el ID del producto: "
 NO_HAY_MOVIMIENTOS = "No hay movimientos registrados."
 SELECCIONE_PROVEEDOR = "\nSeleccione el proveedor: "
+MENSAJE_NUMERO_DECIMAL = "Error: Entrada no válida. Debe ingresar un número decimal (ej: 12.5)."
+MENSAJE_NUMERO_POSITIVO = "Debes ingresar un valor mayor que cero"
 
 # Producto
 ingrese_id_producto = 'Ingrese el ID del producto: '

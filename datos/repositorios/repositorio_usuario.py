@@ -23,6 +23,12 @@ def listado_usuario():
         return usuario
     return False
 
+def existe_usuario_con_rol(rol):
+    return (Usuario
+            .select()
+            .join(Rol)
+            .where(rol.nombre == rol)
+            .exists())
 
 def obtener_usuario_por_nombre(nombre_usuario):
     return Usuario.get_or_none(Usuario.usuario == nombre_usuario)

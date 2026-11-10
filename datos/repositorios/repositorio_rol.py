@@ -9,3 +9,6 @@ def listado_roles():
 #nombre es unique asi que me sirve para buscar
 def obtener_rol_por_nombre_usuario(nombre_usuario):
     return Rol.get_or_none(Rol.nombre == nombre_usuario)
+
+def desactivar_rol_por_usuario(usuario:Usuario,nombre_usuario):
+    pass
