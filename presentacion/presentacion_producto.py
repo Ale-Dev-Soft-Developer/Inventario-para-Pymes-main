@@ -1,174 +1,197 @@
-from negocio.negocio_producto import(crear_producto,
-                                     listado_productos,
-                                     actualizar_producto_existente,
-                                     desactivar_producto)
-
-from auxiliares.entradas import (
-    pedir_texto,
-    pedir_entero,
-    pedir_fecha_opcional,
-    pedir_confirmacion,
-    desea_modificar,
-)
-from auxiliares.mensajes import (
-    ingrese_id_producto,
-    ingrese_nombre_producto,
-    ingrese_descripcion_producto,
-    ingrese_id_categoria_producto,
-    ingrese_sku,
-    ingrese_precio_costo,
-    ingrese_precio_venta,
-    ingrese_fecha_vencimiento,
-    ingrese_fecha_elaboracion,
-    producto_por_id_no_existe,
-    id_debe_ser_entero,
-    ingresaras_producto,
-    titulo_actualizar_producto,
-    estas_seguro,
-    opcion_cancelada,
-    id_debe_ser_entero,
-    no_existe,
-    confirmar_borrar_producto,
-    operacion_exitosa,
-    categoria_no_borrada,
-    opcion_invalida,
-    no_existe_registro
-)
 from prettytable import PrettyTable
-from datos.modelos.producto import Producto
-
-
-
-def listado_productos():
-    
-    productos = listado_productos()
-    
+ 
+from auxiliares.mensajes import MENSAJE_ID_NO_EXISTE
+from auxiliares.entradas import (
+    forzar_entero,
+    pedir_texto,
+    campo_opcional,
+    forzar_decimal_positivo,
+    actualizar_decimal_positivo,
+    forzar_fecha
+)
+from presentacion.presentacion_categoria import solicitar_seleccion_categoria
+from negocio.negocio_producto import (
+    registrar_producto, 
+    sku_en_uso, 
+    actualizar_producto, 
+    desactivar_producto, 
+    activar_producto, 
+    listar_productos_activos, 
+    listar_productos_inactivos,
+    buscar_productos
+)
+ 
+# Metodo auxiliar 
+def solicitar_seleccion_producto():
+    nombre = pedir_texto("Busque el producto por su nombre: ")
+ 
+    productos = buscar_productos(nombre)
+ 
     if not productos:
-        print(no_existe_registro(Producto))
-    
-    tabla_producto = PrettyTable()
-    tabla_producto.field_names = ["ID", "Nombre", "Descripción", "Categoria", "SKU", "Precio Costo", "Precio Venta", "Fecha Vencimiento", "Fecha Elaboracion", "Estado"]
-        
-    for producto in productos:
-            tabla_producto.add_row([
-                producto.id_producto,
-                producto.nombre,
-                producto.descripcion,
-                producto.id_categoria.nombre,
-                producto.sku,
-                producto.precio_costo,
-                producto.precio_venta,
-                producto.fecha_vencimiento,
-                producto.fecha_elaboracion,
-                 ('Inhabilitado', 'Habilitado')[producto.estado]
-                 ])
-    print(tabla_producto)
-
-def solicitar_datos_producto():
-    nombre = pedir_texto(ingrese_nombre_producto)
-    descripcion = pedir_texto(ingrese_descripcion_producto)
-    categoria = pedir_entero(ingrese_id_categoria_producto)
-    sku = pedir_texto(ingrese_sku)
-    precio_costo = pedir_entero(ingrese_precio_costo)
-    precio_venta = pedir_entero(ingrese_precio_venta)
-    fecha_vencimiento = pedir_fecha_opcional(ingrese_fecha_vencimiento)
-    fecha_elaboracion = pedir_fecha_opcional(ingrese_fecha_elaboracion)
-
-    print(ingresaras_producto(nombre, descripcion))
-
-    if not pedir_confirmacion(estas_seguro):
-        print(opcion_cancelada)
+        print("No hay productos con ese nombre.")
         return None
-
-    return crear_producto(
-        nombre = nombre,
-        descripcion = descripcion,
-        categoria = categoria,
-        sku = sku,
-        precio_costo = precio_costo,
-        precio_venta = precio_venta,
-        fecha_vencimiento = fecha_vencimiento,
-        fecha_elaboracion = fecha_elaboracion,
-    )
-
-
-def actualizar_datos_producto():
-    try:
-        id_producto = int(input(ingrese_id_producto))
-    except ValueError:
-        print(id_debe_ser_entero)
+ 
+    for i, producto in enumerate(productos, start=1):
+        print(f"[{i}] - {producto.nombre} ({producto.sku})")
+ 
+    opcion_valida = False
+ 
+    while not opcion_valida:
+        seleccion = forzar_entero("\nSeleccione el producto: ")  
+        if 1 <= seleccion <= len(productos):
+            producto = productos[seleccion-1]
+            opcion_valida = True
+            return producto
+        
+        print(f"Opcion fuera de rango (1-{len(productos)}).")
+ 
+def mostrar_productos():
+    productos = listar_productos_activos()
+ 
+    if not productos:
+        print("No hay productos registrados.")
         return
-
-    # Si existe, obtenemos el objeto Producto y si no existe obtenemos None
-    producto = obtener_producto(id_producto)
-
+ 
+    tabla_productos = PrettyTable()
+    tabla_productos.field_names = ['ID', 'Nombre', 'SKU', 'Precio Costo', 'Precio Venta', 'Descripcion', 'Fecha Elaboracion', 'Fecha Vencimiento', 'Estado', 'Categoria']
+ 
+    for producto in productos:
+        tabla_productos.add_row([
+            producto.id_producto,
+            producto.nombre,
+            producto.sku,
+            producto.precio_costo,
+            producto.precio_venta,
+            producto.descripcion,
+            producto.fecha_elaboracion or '-',
+            producto.fecha_vencimiento or '-',
+            ('Inhabilitado', 'Habilitado')[producto.estado],
+            producto.id_categoria.nombre,
+        ])
+ 
+    print(tabla_productos)
+ 
+def solicitar_datos_producto():
+    print("\n=== Registrar Producto ===")
+ 
+    nombre = pedir_texto("Ingrese el nombre del producto: ")
+ 
+    sku_valido = False
+    while not sku_valido:
+        sku = pedir_texto("Ingrese el SKU del producto: ")
+ 
+        if sku_en_uso(sku):
+            print(f"El SKU: '{sku}' ya fue registrado. Ingrese otro.")
+            continue
+ 
+        sku_valido = True
+ 
+    precio_costo = forzar_decimal_positivo("Ingrese el precio costo del producto: ", 4)
+    precio_venta = forzar_decimal_positivo("Ingrese el precio venta del producto: ", 2)
+        
+    while precio_venta < precio_costo:
+        print("El precio de venta no puede ser menor que el precio costo")
+        precio_venta = forzar_decimal_positivo("Ingrese el precio venta del producto: ", 2)
+    
+    descripcion = pedir_texto("Ingrese la descripcion del producto: ")
+ 
+    fecha_elaboracion = forzar_fecha("Ingrese la fecha de elaboracion 'DD-MM-YYYY' (ENTER si no aplica): ", obligatorio=False)
+    fecha_vencimiento = forzar_fecha("Ingrese la fecha de vencimiento 'DD-MM-YYYY' (ENTER si no aplica): ", obligatorio=False)
+    
+    # Obtener el objeto Categoria por su ID para hacer la relacion
+    categoria = solicitar_seleccion_categoria()
+ 
+    if categoria is None:
+        print("Objeto no encontrado.")
+        return False
+ 
+    resultado = registrar_producto(nombre, sku, precio_costo, precio_venta, descripcion, fecha_elaboracion, fecha_vencimiento, categoria)
+    print("Producto registado con exito.") if resultado else print("No se pudo registrar el producto.")
+              
+def solicitar_consultar_producto():
+    producto = solicitar_seleccion_producto()
+ 
     if producto is None:
-        print(producto_por_id_no_existe)
-        return
-
-    print(titulo_actualizar_producto(id_producto))
-
-    #Se pregunta campo por camnpo si desea actualizar.
-    nombre = producto.nombre
-    if desea_modificar("el nombre", nombre):
-        nombre = pedir_texto(ingrese_nombre_producto)
-
-    descripcion = producto.descripcion
-    if desea_modificar("la descripcion", descripcion):
-        descripcion = pedir_texto(ingrese_descripcion_producto)
-
+        return False
+    
+    # La FK entrega el objeto Categoria
     categoria = producto.id_categoria
-    if desea_modificar("la categoria", categoria):
-        categoria = pedir_entero(ingrese_id_categoria_producto)
-
-    sku = producto.sku
-    if desea_modificar("el SKU", sku):
-        sku = pedir_texto(ingrese_sku)
-
-    precio_costo = producto.precio_costo
-    if desea_modificar("el precio de costo", precio_costo):
-        precio_costo = pedir_entero(ingrese_precio_costo)
-
-    precio_venta = producto.precio_venta
-    if desea_modificar("el precio de venta", precio_venta):
-        precio_venta = pedir_entero(ingrese_precio_venta)
-
-    fecha_vencimiento = producto.fecha_vencimiento
-    if desea_modificar("la fecha de vencimiento", fecha_vencimiento):
-        fecha_vencimiento = pedir_fecha_opcional(ingrese_fecha_vencimiento)
-
-    fecha_elaboracion = producto.fecha_elaboracion
-    if desea_modificar("la fecha de elaboracion", fecha_elaboracion):
-        fecha_elaboracion = pedir_fecha_opcional(ingrese_fecha_elaboracion)
-
-    # retorna a la Capa de Negocio
-    return actualizar_producto_existente(
-        id_producto, nombre, descripcion, categoria, sku,
-        precio_costo, precio_venta, fecha_vencimiento, fecha_elaboracion
-    )
-    
-
-def solicitar_desactivar_producto():
-    
-    #Validacion internma desde auxiliares/entradas.py
-    id_producto = input(pedir_entero(ingrese_id_producto))
-  
-    
-    producto = obtener_producto(id_producto)
-    
+ 
+    estado = "Habilitado" if producto.estado else "Deshabilitado"
+    fecha_elaboracion = producto.fecha_elaboracion or "No aplica"
+    fecha_vencimiento = producto.fecha_vencimiento or "No aplica"
+ 
+    # <18 es para alinear el texto 18 espacios a la izquierda y se vea ordenado
+    print("\n=== Producto encontrado ===")
+    print(f"{'ID':<18}: {producto.id_producto}")
+    print(f"{'Nombre':<18}: {producto.nombre}")
+    print(f"{'SKU':<18}: {producto.sku}")
+    print(f"{'Precio costo':<18}: {producto.precio_costo}")
+    print(f"{'Precio venta':<18}: {producto.precio_venta}")
+    print(f"{'Descripcion':<18}: {producto.descripcion}")
+    print(f"{'Fecha elaboracion':<18}: {fecha_elaboracion}")
+    print(f"{'Fecha vencimiento':<18}: {fecha_vencimiento}")
+    print(f"{'Estado':<18}: {estado}")
+    print(f"{'Categoria':<18}: {categoria.nombre}\n")
+ 
+def solicitar_actualizar_producto():
+    producto = solicitar_seleccion_producto()
+ 
     if producto is None:
-        print(no_existe(producto))
+        return False
+ 
+    id_producto = producto.id_producto
+ 
+    nombre = campo_opcional("Ingrese el nuevo nombre", producto.nombre)
+    sku = campo_opcional("Ingrese el nuevo SKU", producto.sku)
+ 
+    # POR ALGUNA RAZON ESTA ESTUPIDEZ FUNCIONA XD
+    if sku != producto.sku and sku_en_uso(sku, id_producto):
+        print(f"El SKU '{sku}' ya se encuentra registrado.")
+        return False
+ 
+    precio_costo = actualizar_decimal_positivo("Ingrese el nuevo precio de costo", producto.precio_costo, 4)
+    precio_venta = actualizar_decimal_positivo("Ingrese el nuevo precio de venta", producto.precio_venta, 2)
+ 
+    while precio_venta < precio_costo:
+        print("El precio de venta no puede ser menor que el precio costo")
+        precio_venta = forzar_decimal_positivo("Ingrese el precio venta del producto: ", 2)
+ 
+    descripcion = campo_opcional("Ingrese la nueva descripcion", producto.descripcion) 
+ 
+    resultado =  actualizar_producto(producto, nombre, sku, precio_costo, precio_venta, descripcion)
+    print("Producto actualizado con exito.") if resultado else print("No se pudo actualizar el producto.")
+ 
+# FALTA VALIDAR QUE NO SE PUEDAN DESACTIVAR PRODUCTOS CON STOCK > 0    
+def solicitar_desactivar_producto():
+    producto = solicitar_seleccion_producto()
+ 
+    if producto is None:
+        return False
+ 
+    resultado = desactivar_producto(producto)
+    print("Producto desactivado con exito.") if resultado else print("No se pudo desactivar el producto.")
+ 
+def solicitar_activar_producto():
+    productos = listar_productos_inactivos()
+ 
+    if not productos:
+        print("No hay productos desactivados.")
         return
-    
-    confirmar = input(confirmar_borrar_producto(producto.nombre)).lower()
-    
-    if confirmar == "s":
-        resultado = desactivar_producto(id_producto)
-        if resultado:
-            print(operacion_exitosa)
+ 
+    print("\nProductos desactivados:")
+    for i, producto in enumerate(productos, start=1):
+        print(f"[{i}] - {producto.nombre} ({producto.sku})")
+ 
+    opcion_valida = False
+    while not opcion_valida:
+        seleccion = forzar_entero("\nSeleccione el producto: ")
+ 
+        if 1 <= seleccion <= len(productos):
+            opcion_valida = True
+            producto = productos[seleccion - 1]
         else:
-            print(categoria_no_borrada)
-    elif confirmar == "n":
-            print(opcion_cancelada)
-    else:
-            print(opcion_invalida)
+            print(f"Opcion fuera de rango (1-{len(productos)}).")
+ 
+    resultado = activar_producto(producto)
+    print(f"Producto '{producto.nombre}' activado.") if resultado else print("No se pudo activar el producto.")
